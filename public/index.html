@@ -10,4 +10,19 @@
   <input type="text" name="content" />
 
   <button type="submit">Submit</button>
+
+  <div id="result"></div>
 </form>
+
+<script>
+  (async () => {
+    let result = await fetch('/posts', {
+      method: 'GET',
+    });
+
+    console.log({ result });
+
+    result = await result.json();
+    document.getElementById('result').innerHTML = JSON.stringify(result);
+  })();
+</script>
