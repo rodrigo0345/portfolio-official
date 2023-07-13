@@ -1,0 +1,68 @@
+version: '3.8'
+volumes:
+  db:
+    driver: local
+  cache:
+    driver: local
+
+networks:
+  backend-to-cache:
+    driver: bridge
+  backend-to-main_db:
+    driver: bridge
+
+services:
+  backend:
+    container_name: backend
+    build:
+      context: .
+    ports:
+      - '8000:8000'
+    volumes:
+      - .:/workspace
+    environment:
+      - NODE_ENV=development
+      - PORT=8000
+      # if you change this, change the MYSQL_DATABASE in the db service
+      - DATABASE_NAME=main
+      - M_DATABASE_PORT=3306
+      - M_DATABASE_USER=root
+      - M_DATABASE_PASSWORD=
+      - M_DATABASE_HOST=main_db
+      - M_DATABASE_NAME=main
+      - REDIS_URL=redis://cache:6379
+    networks:
+      - backend-to-cache
+      - backend-to-main_db
+    links:
+      - main_db
+      - cache
+    depends_on:
+      - main_db
+      - cache
+
+  main_db:
+    container_name: main_db
+    restart: always
+    image: percona:8.0-centos
+    environment:
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: main
+      MYSQL_ROOT_HOST: '%'
+    command: --bind-address=0.0.0.0
+    ports:
+      - '3306:3306'
+    networks:
+      - backend-to-main_db
+
+  cache:
+    image: redis:7.0-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/cache-portfolio
+    networks:
+      - backend-to-cache

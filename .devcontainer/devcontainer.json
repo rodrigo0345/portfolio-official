@@ -1,0 +1,28 @@
+{
+  "name": "Node.js Development Container",
+  "dockerFile": "../Dockerfile",
+
+  // Add your desired extensions to the "extensions" array
+  "extensions": ["esbenp.prettier-vscode"],
+
+  // Mount the local workspace folder into the container
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+
+  // Set the environment variables for the development container
+  "env": {
+    "NODE_ENV": "development"
+  },
+
+  // Forward ports from the container to the host machine
+  "forwardPorts": [3000],
+
+  // Post-create command to run after the container is created
+  "postCreateCommand": "npm install",
+
+  // Settings for Visual Studio Code within the container
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  }
+}
