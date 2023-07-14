@@ -22,6 +22,25 @@ const tables = [
             INSERT INTO posts (title, content, author)
             VALUES (?, ?, ?);`,
   },
+  {
+    filename: 'user.ts',
+    name: 'users',
+    createTable: `
+            CREATE TABLE IF NOT EXISTS users (
+                id INT NOT NULL AUTO_INCREMENT,
+                name VARCHAR(255) NOT NULL,
+                role INT NOT NULL,
+                email VARCHAR(255) NOT NULL,
+                password VARCHAR(255) NOT NULL,
+                deleted BOOLEAN NOT NULL DEFAULT FALSE,
+                created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                PRIMARY KEY (id)
+            );`,
+    insertTable: `
+            INSERT INTO users (name, role, email, password)
+            VALUES (?, ?, ?, ?);`,
+  },
 ];
 
 export default tables;

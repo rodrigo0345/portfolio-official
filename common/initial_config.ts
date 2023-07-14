@@ -6,6 +6,9 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import compression from 'compression';
 import dotenv from 'dotenv';
+import passport from 'passport';
+import session from 'express-session';
+import { Strategy } from 'passport-local';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
@@ -46,5 +49,42 @@ export default function initial_config(app: Express) {
     res.header('Access-Control-Allow-Credentials', 'true');
 
     next();
+  });
+
+  // express-session makes the login persist within the cookies
+  app.use(
+    session({
+      secret: process.env.SESSION_SECRET ?? 'secret',
+      resave: false,
+      saveUninitialized: true,
+      proxy: true,
+      cookie: {
+        secure: process.env.NODE_ENV === 'development' ? false : true,
+        httpOnly: process.env.NODE_ENV === 'development' ? false : true,
+        sameSite: process.env.NODE_ENV === 'development' ? false : 'none',
+      },
+    }),
+  );
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+  passport.use(
+    new Strategy(function (username, password, done) {
+      // find user in the database
+
+      return 
+    }),
+  );
+
+  passport.serializeUser(function (user: any, done: any) {
+    process.nextTick(function () {
+      done(null, user);
+    });
+  });
+
+  passport.deserializeUser(function (user: any, done: any) {
+    process.nextTick(function () {
+      done(null, user);
+    });
   });
 }

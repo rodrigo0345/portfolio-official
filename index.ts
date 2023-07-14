@@ -5,6 +5,7 @@ import { router } from './routes/posts';
 import Cache from './databases/Cache';
 import dev_log from './common/dev_log';
 import { upload } from './routes/image';
+import { authRouter } from './routes/auth';
 
 /* 
     Here is the entry point of the application.
@@ -35,6 +36,7 @@ console.log('Node mode:', process.env.NODE_ENV ?? 'not set');
 // example of how to use the router
 app.use('/posts', router);
 app.use('/image', upload);
+app.use('/auth', authRouter);
 
 // used '0.0.0.0' to use within docker, if not using docker, it is not needed
 const server = app.listen(
