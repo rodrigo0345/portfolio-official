@@ -1,4 +1,4 @@
-type ApiResponse<T> =
+export type ApiResponse<T> =
   | { status: 'success'; data: T; timestamp: Date }
   | { status: 'error'; message: string; timestamp: Date };
 

@@ -29,7 +29,7 @@ const tables = [
             CREATE TABLE IF NOT EXISTS users (
                 id INT NOT NULL AUTO_INCREMENT UNIQUE,
                 name VARCHAR(255) NOT NULL,
-                role INT NOT NULL,
+                role VARCHAR(10) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
                 deleted BOOLEAN NOT NULL DEFAULT FALSE,

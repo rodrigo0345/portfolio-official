@@ -13,6 +13,7 @@ import { user } from '../types/user';
 import { getUserByEmail, getUserByID } from '../utils/AuthQueries';
 import { ApiError } from './api_response';
 import bcrypt from 'bcrypt';
+import dev_log from './dev_log';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
@@ -78,8 +79,14 @@ export default function initial_config(app: Express) {
 
       try {
         const result = await getUserByEmail(username);
+        dev_log({ result });
+
+        if (!result) {
+          return done(JSON.stringify(ApiError('User not found')));
+        }
+
         if ((result as any).status === 'error') {
-          return done(ApiError((result as any).message));
+          return done(JSON.stringify(ApiError(result.message)));
         }
         user = {
           id: (result as user).id,
@@ -89,11 +96,11 @@ export default function initial_config(app: Express) {
           password: (result as user).password,
         };
         if (!bcrypt.compareSync(password, user.password)) {
-          return done(ApiError('Incorrect password'));
+          return done(JSON.stringify(ApiError('Incorrect password')));
         }
         return done(null, user);
       } catch (error: any) {
-        return done(ApiError(error.message));
+        return done(JSON.stringify(ApiError(error.message)));
       }
     }),
   );
@@ -110,7 +117,7 @@ export default function initial_config(app: Express) {
     try {
       const result = await getUserByID(user.id);
       if ((result as any).status === 'error') {
-        return done(ApiError((result as any).message));
+        return done(JSON.stringify(ApiError((result as any).message)));
       }
       userObj = {
         id: (result as user).id,
@@ -120,7 +127,7 @@ export default function initial_config(app: Express) {
         password: (result as user).password,
       };
     } catch (error: any) {
-      return done(ApiError(error.message));
+      return done(JSON.stringify(ApiError(error.message)));
     }
     process.nextTick(function () {
       done(null, userObj);

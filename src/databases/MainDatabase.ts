@@ -1,6 +1,6 @@
-import mysql, { Pool, ResultSetHeader } from 'mysql2';
+import mysql, { Pool, ResultSetHeader, RowDataPacket } from 'mysql2';
 import dev_log from '../common/dev_log';
-import { ApiError } from '../common/api_response';
+import { ApiError, ApiResponse } from '../common/api_response';
 import fs from 'fs';
 import tables from '../types/db';
 import path from 'path';
@@ -77,7 +77,11 @@ export default class M_Database {
   // exec automatically catches errors and returns the result,
   // in case of an error, check the status of the result
   // .status === 'error'
-  async exec(fn: (connection: any) => any) {
+  // in case of undefined result, that means the query was
+  // successful but there was no result
+  async exec(
+    fn: (connection: any) => any,
+  ): Promise<undefined | ApiResponse<null> | any> {
     try {
       const result = await fn(this.connection);
       return result;

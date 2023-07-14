@@ -1,13 +1,16 @@
 import { Request, Response } from 'express';
 import { ApiError, ApiSuccess } from '../../common/api_response';
-import { userSchema } from '../../types/user';
+import { Role, userSchema } from '../../types/user';
 import { mDatabase } from '../../';
 import tables from '../../types/db';
 import { ResultSetHeader } from 'mysql2';
 import bcrypt from 'bcrypt';
+import dev_log from '../../common/dev_log';
 
 export default async function postRegister(req: Request, res: Response) {
-  const { email, password, name, role } = req.body;
+  dev_log({ body: req.body });
+  const { username, password, name, role } = req.body;
+  const email = username;
 
   if (!email || !password || !name || !role) {
     return res.status(400).json(ApiError('Missing required fields'));

@@ -1,16 +1,10 @@
 import { z } from 'zod';
 
-export type user = {
-  id?: number;
-  name: string;
-  role: Role;
-  email: string;
-  password: string;
-};
+export type user = z.infer<typeof userSchema>;
 
 export enum Role {
-  Admin,
-  User,
+  Admin = 'admin',
+  User = 'user',
 }
 
 // used to check the data coming from the client
