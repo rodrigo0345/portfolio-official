@@ -12,10 +12,12 @@ import { authRouter } from './routes/auth';
     I have laid out some working examples of how to use the database and the router.
     The public folder is used to serve static files, such as images, html, etc...
     To test functionallity such as the database and the file uploads, use:
-    - Postman
-    - localhost:3000/public/file.html
-    - localhost:3000/public/index.html
+    - localhost:8000/public/file.html
+    - localhost:8000/public/index.html
     This is also a good way to test if everything is working properly
+    To run the app in containers simply run 'docker-compose up' in the root directory of the project and the app will be available on localhost:8000. Once you are done, run 'docker-compose down' to stop the containers.
+    If you need to change the code, there is no need to restart the containers, just save the file and the changes will be applied automatically.
+    The benefit of using containers is that you don't need to install anything on your machine, everything is done inside the container and it brings already configured database and cache.
 */
 
 export const mDatabase = new M_Database(
