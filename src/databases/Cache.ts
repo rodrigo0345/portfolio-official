@@ -6,6 +6,7 @@ export default class Cache {
   connection;
 
   constructor(redis_url?: string | undefined) {
+    dev_log({ redis_url });
     this.connection = redis_url
       ? createClient({
           url: redis_url,
@@ -18,20 +19,15 @@ export default class Cache {
       console.log('closing redis...');
       this.connection.quit();
     });
+    this.connection.connect();
 
     console.log('Redis connected');
   }
 
-  _connect = (callback: () => void) => {
-    this.connection.connect();
-    callback();
-    this.connection.quit();
-  };
-
   async save(key: string, value: {}): Promise<boolean> {
     try {
       await this.connection.set(key, JSON.stringify(value), {
-        EX: 60 * 10, // The cache is valid for 10 minutes
+        EX: 60, // The cache is valid for 60 seconds
       });
       return true;
     } catch (error: any) {
@@ -43,6 +39,15 @@ export default class Cache {
   async get(key: string) {
     try {
       return await this.connection.get(key);
+    } catch (error: any) {
+      dev_log(error);
+      return ApiError(error.message);
+    }
+  }
+
+  async delete(key: string) {
+    try {
+      return await this.connection.del(key);
     } catch (error: any) {
       dev_log(error);
       return ApiError(error.message);
