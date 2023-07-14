@@ -11,7 +11,7 @@ COPY package*.json ./
 RUN npm install
 
 # Copy the rest of the app source code
-COPY . .
+COPY ./src ./src
 
 # Expose port 8000 (the port that your Express app listens to)
 EXPOSE 8000

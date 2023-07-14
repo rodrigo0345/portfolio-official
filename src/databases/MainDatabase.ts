@@ -24,7 +24,7 @@ export default class M_Database {
     const host = db_host || 'localhost'; // Use the service name 'db' here
     const user = db_user || 'root';
     const password = db_password || 'password';
-    const database = db_name || 'forum';
+    const database = db_name || 'main';
 
     dev_log({ host, port, user, password, database });
 
@@ -65,7 +65,7 @@ export default class M_Database {
     for (const type of types) {
       // first check if the type exists
       if (!fs.existsSync(path.join(__dirname, '..', 'types', type.filename)))
-        throw Error(`Type @types/${type.filename} does not exist`);
+        throw Error(`File at @types/${type.filename} does not exist`);
       await this.connection.query(type.createTable);
     }
   }

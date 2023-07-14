@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ApiError, ApiSuccess } from '../../common/api_response';
 import { userSchema } from '../../types/user';
-import { mDatabase } from '../../..';
+import { mDatabase } from '../../';
 import tables from '../../types/db';
 import { ResultSetHeader } from 'mysql2';
 import bcrypt from 'bcrypt';
