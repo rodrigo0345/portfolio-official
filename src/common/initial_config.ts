@@ -74,7 +74,7 @@ export default function initial_config(app: Express) {
       const user: user | undefined = undefined;
       // find user in the database
       // if error return done(error)
-      
+
       return done(null, user);
     }),
   );

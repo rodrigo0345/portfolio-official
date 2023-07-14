@@ -1,4 +1,4 @@
-import { mDatabase } from '../..';
+import { mDatabase } from '../../..';
 import { Request, Response } from 'express';
 import tables from '../../types/db';
 import { ApiSuccess } from '../../common/api_response';
