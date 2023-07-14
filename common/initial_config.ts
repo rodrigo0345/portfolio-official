@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import session from 'express-session';
 import { Strategy } from 'passport-local';
+import { user } from '../types/user';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
@@ -70,9 +71,11 @@ export default function initial_config(app: Express) {
 
   passport.use(
     new Strategy(function (username, password, done) {
+      const user: user | undefined = undefined;
       // find user in the database
-
-      return 
+      // if error return done(error)
+      
+      return done(null, user);
     }),
   );
 

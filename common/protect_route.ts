@@ -1,6 +1,11 @@
-export default function protectRoute(req: any, res: any, next: any) {
-  devLog({ user: req.user, req: req.header });
+import { ApiError } from './api_response';
+import dev_log from './dev_log';
 
-  if(req.au)
-  return next();
+export default function protectRoute(req: any, res: any, next: any) {
+  dev_log({ user: req.user });
+
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  return res.status(401).json(ApiError('Unauthorized'));
 }
