@@ -75,7 +75,8 @@ export default class M_Database {
   }
 
   // exec automatically catches errors and returns the result,
-  // it also caches everything automatically
+  // in case of an error, check the status of the result
+  // .status === 'error'
   async exec(fn: (connection: any) => any) {
     try {
       const result = await fn(this.connection);

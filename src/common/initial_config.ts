@@ -10,6 +10,9 @@ import passport from 'passport';
 import session from 'express-session';
 import { Strategy } from 'passport-local';
 import { user } from '../types/user';
+import { getUserByEmail, getUserByID } from '../utils/AuthQueries';
+import { ApiError } from './api_response';
+import bcrypt from 'bcrypt';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
@@ -70,12 +73,28 @@ export default function initial_config(app: Express) {
   app.use(passport.session());
 
   passport.use(
-    new Strategy(function (username, password, done) {
-      const user: user | undefined = undefined;
-      // find user in the database
-      // if error return done(error)
+    new Strategy(async function (username, password, done) {
+      let user: user | undefined = undefined;
 
-      return done(null, user);
+      try {
+        const result = await getUserByEmail(username);
+        if ((result as any).status === 'error') {
+          return done(ApiError((result as any).message));
+        }
+        user = {
+          id: (result as user).id,
+          name: (result as user).name,
+          email: (result as user).email,
+          role: (result as user).role,
+          password: (result as user).password,
+        };
+        if (!bcrypt.compareSync(password, user.password)) {
+          return done(ApiError('Incorrect password'));
+        }
+        return done(null, user);
+      } catch (error) {
+        return done(ApiError(error.message));
+      }
     }),
   );
 
@@ -85,9 +104,26 @@ export default function initial_config(app: Express) {
     });
   });
 
-  passport.deserializeUser(function (user: any, done: any) {
+  passport.deserializeUser(async function (user: any, done: any) {
+    let userObj: user | undefined = undefined;
+
+    try {
+      const result = await getUserByID(user.id);
+      if ((result as any).status === 'error') {
+        return done(ApiError((result as any).message));
+      }
+      userObj = {
+        id: (result as user).id,
+        name: (result as user).name,
+        email: (result as user).email,
+        role: (result as user).role,
+        password: (result as user).password,
+      };
+    } catch (error: any) {
+      return done(ApiError(error.message));
+    }
     process.nextTick(function () {
-      done(null, user);
+      done(null, userObj);
     });
   });
 }
