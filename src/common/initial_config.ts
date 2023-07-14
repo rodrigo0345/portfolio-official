@@ -92,7 +92,7 @@ export default function initial_config(app: Express) {
           return done(ApiError('Incorrect password'));
         }
         return done(null, user);
-      } catch (error) {
+      } catch (error: any) {
         return done(ApiError(error.message));
       }
     }),
