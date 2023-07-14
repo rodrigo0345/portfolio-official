@@ -3,7 +3,7 @@
 ## Introduction
 
 This repo was made to help me build node applications faster, as it is something that I do often and that I don't like to configure everytime.
-With that said, it includes file uploads, authentication using passport and a basic create and read enpoint for better undertanding how everything is laid out.
+With that said, it includes file uploads, authentication using passport and a basic create and read endpoint for better undertanding how everything is laid out.
 The base configuration comes with MySQL and Redis installed, but this can be adjusted at anytime in the folder /src/databases/ in the constructor of the class.
 
 ## Instalation and usage
@@ -23,9 +23,9 @@ npm i
 ```
 
 And the basic of it is done.
-Because we are using redis and mysql, you will also need to install its respective clients up and running **or** you can use docker-compose to spin up everything for you!
+Because we are using redis and mysql, you will also need to install its respective clients and spin them up **or** you can use docker-compose to spin up everything for you!
 
-**Prerequisite: docker**
+**Spin up using Docker**
 
 Windows
 
@@ -53,7 +53,7 @@ Linux
 docker-compose down
 ```
 
-For additional configuration, don't forget to change the name of the .env.example to .env and mess around with the values for your use case.
+For additional configuration, don't forget to change the name of the .env.example to .env and mess around with the values for your specific use case.
 
 ## File structure:
 
@@ -143,3 +143,9 @@ It indicates that:
 ```
 
 The file called what you specified in .filename does not exist inside the folder types!
+
+## Authentication
+
+### Access the user data
+
+To access the user data simply use req.user in the request and it is as simple as that, for more information go look at the documentation of [passport.js](https://www.passportjs.org/packages/passport-local/)
