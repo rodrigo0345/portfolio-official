@@ -38,7 +38,8 @@ export default class Cache {
 
   async get(key: string) {
     try {
-      return await this.connection.get(key);
+      const obj = await this.connection.get(key);
+      return obj ? JSON.parse(obj) : undefined;
     } catch (error: any) {
       dev_log(error);
       return ApiError(error.message);
