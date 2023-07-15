@@ -57,19 +57,19 @@ For additional configuration, don't forget to change the name of the .env.exampl
 
 ## File structure:
 
-    - .devcontainer # Optional and used only for Visual Studio Code
-    - .vscode # Optional and used only for Visual Studio Code
-    - public # here are all the things that can be accessed by anyone, simply go to <running_uri>/public/<file>
-    - src
-        - common # contains initial configs
-        - controllers
-            - auth
-            - image
-            - posts
-        - databases
-        - routes
-        - types # helps with defining types that are gonna be used throughout the app and/or in the database
-        - utils # random stuff that might be usefull
+- .devcontainer # Optional and used only for Visual Studio Code
+- .vscode # Optional and used only for Visual Studio Code
+- public # here are all the things that can be accessed by anyone, simply go to <running_uri>/public/<file>
+- src
+  - common # contains initial configs
+  - controllers
+    - auth
+    - image
+    - posts
+  - databases
+  - routes
+  - types # helps with defining types that are gonna be used throughout the app and/or in the database
+  - utils # random stuff that might be usefull
 
 ## Controllers and Routes
 
@@ -79,9 +79,9 @@ These two are heavily connected between one another because the route simply spe
 
 routes contains this files:
 
-    - auth.ts
-    - image.ts
-    - posts.ts
+- auth.ts
+- image.ts
+- posts.ts
 
 inside the file (e.g auth.ts) we have:
 
@@ -97,11 +97,11 @@ authRouter.get('/user', protectRoute, getUser);
 
 thus, controllers are gonna contain:
 
-    - auth (directory)
-        - getUser.ts # the acctual implementation of getUser specified above
-        - postRegister.ts
-    - image (directory)
-    - posts (directory)
+- auth (directory)
+  - getUser.ts # the acctual implementation of getUser specified above
+  - postRegister.ts
+- image (directory)
+- posts (directory)
 
 ## Types
 
@@ -149,3 +149,20 @@ The file called what you specified in .filename does not exist inside the folder
 ### Access the user data
 
 To access the user data simply use req.user in the request and it is as simple as that, for more information go look at the documentation of [passport.js](https://www.passportjs.org/packages/passport-local/)
+
+# Dependencies
+
+- [typescript](https://www.npmjs.com/package/typescript)
+- [cors](https://www.npmjs.com/package/cors)
+- [morgan](https://www.npmjs.com/package/morgan)
+- [express](https://www.npmjs.com/package/express)
+- [mysql2](https://www.npmjs.com/package/mysql2)
+- [bcrypt](https://www.npmjs.com/package/bcrypt)
+- [express-session](https://www.npmjs.com/package/express-session)
+- [multer](https://www.npmjs.com/package/multer)
+- [passport](https://www.npmjs.com/package/passport)
+- [express-rate-limit](https://www.npmjs.com/package/express-rate-limit)
+- [zod](https://www.npmjs.com/package/zod)
+- [redis](https://www.npmjs.com/package/redis)
+- [sharp](https://www.npmjs.com/package/sharp)
+- [ts-reset](https://www.npmjs.com/package/@total-typescript/ts-reset)
