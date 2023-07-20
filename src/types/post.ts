@@ -4,9 +4,16 @@
     This file is just an example, you can delete it if you don't need it.
 */
 
-export type post = {
-  id?: number;
-  title: string;
-  content: string;
-  author: string;
-};
+import { z } from "zod";
+
+export const postSchema = z.object({
+  id: z.number().optional(),
+  title: z.string().min(3).max(255),
+  content: z.string().min(4),
+  category: z.string().min(3).max(255),
+  image: z.string().min(4),
+  created_at: z.date().optional(),
+  updated_at: z.date().optional(),
+});
+
+export type post = z.infer<typeof postSchema>;

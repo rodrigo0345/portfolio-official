@@ -1,0 +1,15 @@
+<% layout('/layout/main')%> 
+<% block('title', 'My Blog')%>
+
+
+<% for(let [index,data] of posts.entries() || []){  %>
+    <article>
+        <img src="/public/<%=data.image%>" alt="">
+        <h2><%=data.title%></h2>
+        <p><%=data.created_at%></p>
+    </article>
+<%} %>
+
+<% if(posts.length === 0) { -%>
+    <p>No posts yet</p>
+<% } -%>

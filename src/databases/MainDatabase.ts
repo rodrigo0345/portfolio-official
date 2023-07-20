@@ -1,6 +1,6 @@
 import mysql, { Pool, ResultSetHeader, RowDataPacket } from 'mysql2';
 import dev_log from '../common/dev_log';
-import { ApiError, ApiResponse } from '../common/api_response';
+import { ApiError, ApiResponse, ApiSuccess } from '../common/api_response';
 import fs from 'fs';
 import tables from '../types/db';
 import path from 'path';
@@ -84,7 +84,7 @@ export default class M_Database {
   ): Promise<undefined | ApiResponse<null> | any> {
     try {
       const result = await fn(this.connection);
-      return result;
+      return ApiSuccess<any>(result);
     } catch (error: any) {
       dev_log(error);
       return ApiError(error.message);

@@ -4,7 +4,6 @@ import M_Database from './databases/MainDatabase';
 import { router } from './routes/posts';
 import Cache from './databases/Cache';
 import dev_log from './common/dev_log';
-import { upload } from './routes/image';
 import { authRouter } from './routes/auth';
 import { websiteRouter } from './routes/website';
 import path from 'path';
@@ -51,7 +50,6 @@ app.set('view engine', 'ejs'); // set up ejs for templating
 
 // example of how to use the router
 app.use('/posts', router);
-app.use('/image', upload);
 app.use('/auth', authRouter);
 app.use('/', websiteRouter);
 

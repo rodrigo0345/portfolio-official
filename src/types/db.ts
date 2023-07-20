@@ -13,14 +13,15 @@ const tables = [
                 id INT NOT NULL AUTO_INCREMENT,
                 title VARCHAR(255) NOT NULL,
                 content TEXT NOT NULL,
-                author VARCHAR(255) NOT NULL,
+                category VARCHAR(255) NOT NULL,
+                image VARCHAR(255) NOT NULL,
                 created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
                 PRIMARY KEY (id)
             );`,
     insertTable: `
-            INSERT INTO posts (title, content, author)
-            VALUES (?, ?, ?);`,
+            INSERT INTO posts (title, content, image, category)
+            VALUES (?, ?, ?, ?);`,
   },
   {
     filename: 'user.ts',

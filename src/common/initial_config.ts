@@ -14,6 +14,8 @@ import { getUserByEmail, getUserByID } from '../utils/AuthQueries';
 import { ApiError } from './api_response';
 import bcrypt from 'bcrypt';
 import dev_log from './dev_log';
+import multer from 'multer';
+import path from 'path';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
@@ -134,3 +136,18 @@ export default function initial_config(app: Express) {
     });
   });
 }
+
+export const storageConfig = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, path.resolve('public'));
+  },
+  filename: function (req, file, cb) {
+    const time = new Date().getTime();
+    cb(null, `${time}_${file.originalname}`);
+  },
+});
+
+export const fileUploadSettings = multer({
+  storage: storageConfig,
+  limits: { fileSize: 5 * 1000 * 1000 }, // 5MB limit
+});
