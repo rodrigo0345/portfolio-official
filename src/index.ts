@@ -6,6 +6,9 @@ import Cache from './databases/Cache';
 import dev_log from './common/dev_log';
 import { upload } from './routes/image';
 import { authRouter } from './routes/auth';
+import { websiteRouter } from './routes/website';
+import path from 'path';
+import ejsLocals from 'ejs-locals';
 
 /* 
     Here is the entry point of the application.
@@ -42,10 +45,17 @@ initial_config(app);
 // for logging purposes
 console.log('Node mode:', process.env.NODE_ENV ?? 'not set');
 
+app.engine('ejs', ejsLocals);
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs'); // set up ejs for templating
+
 // example of how to use the router
 app.use('/posts', router);
 app.use('/image', upload);
 app.use('/auth', authRouter);
+app.use('/', websiteRouter);
+
+
 
 // used '0.0.0.0' to use within docker, if not using docker, it is not needed
 const server = app.listen(

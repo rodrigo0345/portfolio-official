@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: #141616;
+  background-color: #fef3c7;
+  font-size: 28px;
+  overflow-x: hidden;
+}
+
+:root {
+    --scroll: 0;
+    --scroll-unlimited: 0;
+    --background-color: rgb(255, 255, 255, var(--background-opacity));
+}
+
+.top-section {
+    position: sticky;
+    top: 0;
+    /* (oldVal - oldMin) * newRange / oldRange + newMin */
+    translate: 0 calc(-1% * (max(var(--scroll), 25) - 25) * 100 / 75);
+    
+}
+
+.top-section .left {
+    background-color: rgb(248, 250, 249, var(--background-opacity));
+}
+
+.top-section aside {
+    backdrop-filter: opacity;
+    --background-opacity: calc(100% - 1% * min(var(--scroll), 30) * 100 / 30);
+}
+
+.imgs > * {
+    position: fixed;
+    width: 100vw;
+    bottom: 0;
+    z-index: 10;
+    transform: translate(0, 100%);
+    transition: all 250ms ease-in-out;
+    height: 20vh;
+  }
+  
+  .imgs > .show {
+    transform: translate(0, 0);
+  }
+  
+  [data-img-to-show] {
+    position: absolute;
+    top: 20%;
+  }
+
+  
+.imgs > .top-section-helper {
+    --value: min(var(--scroll), 30) * 50 / 30;
+    width: calc(50vw + 1vw * var(--value));
+    transform: translateY(calc(50% - 1% * var(--value)));
+}
+
+@media screen and (max-width: 768px) {
+    .imgs > .top-section-helper {
+        width: 100%;
+    }
+  }
+
+.degree {
+    translate: calc(-1% * (max(var(--scroll), 25) - 25) * 100 / 75) 0;
+}
+
+.about-me-bg {
+    transform: translateY(calc(-1% * (max(var(--scroll), 25) - 25) * 100 / 75));
+}
+
+.blink {
+    animation: blink 3s infinite;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 0.3;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.3;
+    }
+}
+
+.expand-left {
+    transform: translateX(calc(-1% * (max(var(--scroll-unlimited), 25) - 25) * 100 / 75));
+}
+
+.expand-right {
+    transform: translateX(calc(1% * (max(var(--scroll-unlimited), 25) - 25) * 100 / 75));
+}
+
+.expand-top {
+    transform: translateY(calc(-1% * (max(var(--scroll-unlimited), 25) - 25) * 100 / 75));
+}
+
+.expand-bottom {
+    transform: translateY(calc(1% * (max(var(--scroll-unlimited), 25) - 25) * 100 / 75));
+}
+
+.loader {
+    rotate: calc(-1deg * (max(var(--scroll-unlimited), 25) - 25) * 100 / 75);
+}
+
+.expand-top-reverse {
+    transform: translateY(calc(1% * (max(var(--scroll-unlimited), 0) - 25) * 100 / 75));
+}
+
+.expand-bottom-reverse {
+    transform: translateY(calc(-1% * (max(var(--scroll-unlimited), 0) - 25) * 100 / 75));
+}
+
+.expand-left-reverse {
+    transform: translateX(calc(1% * (max(var(--scroll-unlimited), 0) - 25) * 100 / 75));
+}
+
+.expand-right-reverse {
+    transform: translateX(calc(-1% * (var(--scroll-unlimited)) * 100 / 75));
+}
+

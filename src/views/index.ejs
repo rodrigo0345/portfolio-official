@@ -1,0 +1,123 @@
+<% layout('/layout/main')%> 
+<% block('title', 'Rodrigo Casanova')%>
+
+
+<section class="relative top-section flex justify-center w-full items-center min-h-screen h-screen z-0">
+    <aside class="left flex-1 w-1/2 flex items-start justify-center flex-col h-full pl-10 lg:pl-28 gap-5">
+        <h1 class="text-8xl font-cormorant lg:text-9xl ">Rodrigo Casanova</h1>
+        <p class="text-xl font-poppins text-gray-500 mix-blend-difference">Come learn more about me</p>
+        <a href="#aboutme" class="font-sans text-lg bg-red-800 px-2 py-1 rounded-sm shadow-sm text-white font-semibold hover:shadow-xl transition-all hover:bg-red-950">About me</a>
+    </aside>
+
+    <aside class="bg-transparent flex-1 w-1/2 h-full hidden md:block">
+        
+    </aside>
+
+    <div class="hidden md:block h-fit  w-96 rounded-xl absolute bottom-1/3 sm:right-[2vw] right-[10vw] lg:right-[15vw]">
+        <div class="degree bg-red-950 p-4 mb-5 shadow-xl">
+            <div class="flex items-center">
+                <a href="https://www.uminho.pt/EN" class="" target="_blank">
+                    <img class="p-4 w-28 rounded-full" src="https://images.crunchbase.com/c_lpad,h_256,w_256,f_auto,q_auto:eco,dpr_1/bjcyy4d1ydlrlyvufu37" alt="University of Minho">
+                </a>
+                
+                <div class="">
+                    <div class="flex items-center">
+                        <h3 class="text-lg text-white text-balance whitespace-pre-line font-poppins">My degree</h3>
+                        <p class="text-sm text-amber-300 ml-2 font-mono">2021-2024</p>
+                    </div>
+                    <p class="text-sm text-gray-200">Engineering and Management of Information Systems</p>
+                </div>
+            </div>
+        </div>
+        <div class="skills bg-amber-200 p-4 shadow-lg w-fit">
+            <div class="flex items-start flex-col w-fit">
+                    <ul>
+                        <li class="flex items-center">
+                            <img class="p-4 w-24 rounded-full" src="https://cdn-icons-png.flaticon.com/256/145/145807.png" alt="Linkedin">
+                            <a href="" class="text-gray-900 text-lg font-semibold font-poppins underline hidden lg:block pr-4 hover:text-red-800 transition-all">Linkedin</a>
+                            
+                        </li>
+                        <li class="flex items-center">
+                            <img src="https://files.nachonacho.com/images/_1554417317973_github.png" class="w-24 rounded-full p-4" alt="">
+                            <a href="" class="text-gray-900 text-lg font-semibold font-poppins underline hidden lg:block pr-4 hover:text-blue-600/80 transition-all">Github</a>
+                        </li>
+                    </ul>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div data-img-to-show="#img-1" class="absolute bottom-0"></div>
+</section>
+
+<section id="aboutme" class="relative min-h-screen h-screen flex items-start justify-start flex-col  z-10 pt-[30vh] ">
+    <div class="max-w-[1024px] mx-auto bg-amber-100">
+        <img src="" alt="" class="absolute">
+        <h1 class="text-9xl font-cormorant">About me</h1>
+        <div class="flex gap-5 items-center">
+            <p class="text-start text-lg bg-red-800 hover:shadow-xl hover:bg-red-900 transition-all text-white w-fit px-4">I'm still a student</p>
+            
+        </div>
+        <div class="mt-5 font-poppins">
+            <img src="" alt="">
+            <p>I'm just a student trying to make the most out of computers. Since the age of 16 I have been engaged to learn programming using online resources and as of today nothing has changed.</p>
+        </div>
+        <div class="about-me-bg h-[100vh] w-full bg-white absolute bottom-0 left-0 z-10 flex items-center justify-center shadow-xl
+        ">
+            <div class="h-[40vh] w-[40vh] relative loader">
+                <div class="expand-top-reverse bg-red-700 h-[10vh] w-full absolute top-0">
+                </div>
+                <div class="expand-left-reverse bg-red-800 h-full w-[10vh] absolute left-0 transform-gpu"></div>
+                <div class="expand-bottom-reverse bg-red-900 h-[10vh] w-full absolute bottom-0"></div>
+                <div class="expand-right-reverse bg-red-950 h-full w-[10vh] absolute right-0 bottom-0"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</section>
+
+<section id="" class="relative min-h-screen z-10">
+    <div class="max-w-[1024px] mx-auto">
+        <h1 class="text-9xl font-cormorant text-left
+        ">My Projects</h1>
+        <p class="text-gray-500">Checkout some of my previous work</p>
+        <div class="grid grid-cols-6 grid-rows-6 gap-5 min-h-screen mt-10">
+            <a href="https://github.com/rodrigo0345/aed2-Gestao-de-banco" target="_blank" class="come-in-left group shadow-xl row-span-4 col-span-2 items-center justify-center flex relative bg-stone-800 transition-all overflow-hidden">
+                <img src="https://img.freepik.com/free-photo/view-new-york-city-usa_53876-160509.jpg?w=2000" alt="" class="absolute h-full w-full object-cover mix-blend-overlay">
+                <div class="flex flex-col">
+                    <h2 class="text-transparent group-hover:text-white transition-all text-xl z-10">App for managing a bank</h2>
+                    <p class="text-transparent group-hover:text-gray-400 transition-all text-sm z-10">Made for college using C as the main language</p>
+                </div>
+                <div class="absolute h-full w-full bg-zinc-800/70 -left-full group-hover:left-0 transition-all"></div>
+            </a>
+            <a href="https://github.com/rodrigo0345/CV-Maker" target="_blank" class="shadow-xl come-in-top group row-span-2 col-span-2 items-center justify-center flex relative bg-gray-800 transition-all overflow-hidden">
+                <img src="https://www.endorsejobs.com/wp-content/uploads/2020/04/cv2-e1587466404269.jpg" alt="" class="absolute h-full w-full object-cover mix-blend-overlay">
+                <div class="flex flex-col">
+                    <h2 class="text-transparent group-hover:text-white transition-all text-xl z-10">CV-Maker</h2>
+                    <p class="text-transparent group-hover:text-gray-400 transition-all text-sm z-10">Simple react app to create CVs from scratch</p>
+                </div>
+                <div class="absolute h-full w-full bg-zinc-800/70 -left-full group-hover:left-0 transition-all"></div>
+            </a>
+            <a href="https://github.com/rodrigo0345/node_template" target="_blank" class="shadow-xl come-in-right group row-span-2 col-span-2 items-center justify-center flex relative bg-gray-700 transition-all overflow-hidden">
+                <img src="https://wallpapers.com/images/hd/volleyball-aesthetic-hpimlj9cc37g6ze2.jpg" alt="" class="absolute h-full w-full object-cover mix-blend-overlay">
+                <div class="flex flex-col p-4">
+                    <h2 class="text-transparent group-hover:text-white transition-all text-xl z-10">Node template</h2>
+                    <p class="text-transparent group-hover:text-gray-400 transition-all text-sm z-10">Programmer oriented resource focused on getting a good out of the box experience with nodejs</p>
+                </div>
+                <div class="absolute h-full w-full bg-zinc-800/70 -left-full group-hover:left-0 transition-all"></div>
+            </a>
+            <div class="col-span-4 row-span-2 p-4 group relative overflow-hidden flex flex-col justify-center">
+                <h1 class="font-cormorant text-5xl">This very own Portfolio</h1>
+                <p class="font-poppins text-lg text-gray-600 mt-4">It was made using Laravel and Blade as I have never tried php before. Also go check what I posted on my 
+                    <a href="/blog" class="text-start text-lg bg-red-800  hover:shadow-xl hover:bg-red-900 transition-all text-white w-fit px-4 py-1">blog</a>
+                    and
+                    <a href="/blog" class="text-start text-lg bg-red-800  hover:shadow-xl hover:bg-red-900 transition-all text-white w-fit px-4 py-1">github</a>
+                </p>
+                
+            </div>
+        </div>
+    </div>
+
+    
+</section>
