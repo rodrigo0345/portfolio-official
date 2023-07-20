@@ -20,14 +20,21 @@ import { authRouter } from './routes/auth';
     The benefit of using containers is that you don't need to install anything on your machine, everything is done inside the container and it brings already configured database and cache.
 */
 
-export const mDatabase = new M_Database(
-  process.env.M_DATABASE_PORT,
-  process.env.M_DATABASE_HOST,
-  process.env.M_DATABASE_USER,
-  process.env.M_DATABASE_PASSWORD,
-  process.env.M_DATABASE_NAME,
-);
-export const cache = new Cache(process.env.REDIS_URL);
+// the timeout is used to give the database and cache time to start
+export let mDatabase: M_Database;
+export let cache: Cache;
+
+setTimeout(() => {
+  mDatabase = new M_Database(
+    process.env.M_DATABASE_PORT,
+    process.env.M_DATABASE_HOST,
+    process.env.M_DATABASE_USER,
+    process.env.M_DATABASE_PASSWORD,
+    process.env.M_DATABASE_NAME,
+  );
+  cache = new Cache(process.env.REDIS_URL);
+}, 10000)
+
 
 const app = express();
 initial_config(app);

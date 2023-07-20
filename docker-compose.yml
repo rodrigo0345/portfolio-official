@@ -25,12 +25,12 @@ services:
       - NODE_ENV=development
       - PORT=8000
       # if you change this, change the MYSQL_DATABASE in the main_db service
-      - DATABASE_NAME=main
-      - M_DATABASE_PORT=3306
-      - M_DATABASE_USER=root
-      - M_DATABASE_PASSWORD=password
-      - M_DATABASE_HOST=main_db
-      - M_DATABASE_NAME=main
+      - DATABASE_NAME=${DATABASE_NAME}
+      - M_DATABASE_PORT=${M_DATABASE_PORT}
+      - M_DATABASE_USER=${M_DATABASE_USER}
+      - M_DATABASE_PASSWORD=${M_DATABASE_PASSWORD}
+      - M_DATABASE_HOST=${M_DATABASE_HOST}
+      - M_DATABASE_NAME=${M_DATABASE_NAME}
       - REDIS_URL=redis://cache:6379
     networks:
       - backend-to-cache
@@ -47,9 +47,9 @@ services:
     restart: always
     image: percona:8.0-centos
     environment:
-      MYSQL_PASSWORD: password
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: main
+      MYSQL_PASSWORD: ${M_DATABASE_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${M_DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${M_DATABASE_NAME}
       MYSQL_ROOT_HOST: '%'
     command: --bind-address=0.0.0.0
     ports:
