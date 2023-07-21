@@ -758,6 +758,10 @@ video {
   grid-template-rows: repeat(6, minmax(0, 1fr));
 }
 
+.flex-row-reverse {
+  flex-direction: row-reverse;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -800,6 +804,10 @@ video {
 
 .gap-5 {
   gap: 1.25rem;
+}
+
+.self-end {
+  align-self: flex-end;
 }
 
 .overflow-hidden {
@@ -941,6 +949,21 @@ video {
   padding-bottom: 1rem;
 }
 
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.py-\[50vh\] {
+  padding-top: 50vh;
+  padding-bottom: 50vh;
+}
+
+.py-\[20vh\] {
+  padding-top: 20vh;
+  padding-bottom: 20vh;
+}
+
 .pl-10 {
   padding-left: 2.5rem;
 }
@@ -1028,6 +1051,10 @@ video {
 
 .font-semibold {
   font-weight: 600;
+}
+
+.uppercase {
+  text-transform: uppercase;
 }
 
 .text-amber-300 {

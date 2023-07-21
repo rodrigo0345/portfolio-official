@@ -13,3 +13,6 @@ websiteRouter.get('/makepost', (req, res) => {
 websiteRouter.get('/login', (req, res) => {
     res.render('login');
 });
+websiteRouter.get('/register', (req, res) => {
+    res.render('register');
+});

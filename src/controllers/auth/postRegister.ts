@@ -9,10 +9,10 @@ import dev_log from '../../common/dev_log';
 
 export default async function postRegister(req: Request, res: Response) {
   dev_log({ body: req.body });
-  const { username, password, name, role } = req.body;
+  const { username, password, name } = req.body;
   const email = username;
 
-  if (!email || !password || !name || !role) {
+  if (!email || !password || !name) {
     return res.status(400).json(ApiError('Missing required fields'));
   }
 
@@ -21,7 +21,6 @@ export default async function postRegister(req: Request, res: Response) {
       email,
       password,
       name,
-      role,
     });
   } catch (err: any) {
     return res.status(400).json(ApiError(err.message));
@@ -41,15 +40,14 @@ export default async function postRegister(req: Request, res: Response) {
   const result = await mDatabase.exec(async (connection) => {
     return await connection.query(sqlCommand, [
       name,
-      role,
       email,
       hashedPassword,
     ]);
   });
 
   if (result.status === 'error') {
-    return res.status(500).json(result);
+    return res.redirect('/register');
   }
 
-  return res.json(ApiSuccess<number>((result[0] as ResultSetHeader).insertId));
+  return res.redirect('/login');
 }

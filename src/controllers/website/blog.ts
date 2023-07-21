@@ -33,7 +33,7 @@ export async function blog(req: Request, res: Response) {
 
     const posts = data.data as mysql.RowDataPacket[];
 
-    dev_log({ posts });
+    dev_log({ posts, user: req.user });
     
-    res.render('blog', { posts, index: index + 1, searchParams });
+    res.render('blog', { posts, index: index + 1, searchParams, user: req.user });
 }

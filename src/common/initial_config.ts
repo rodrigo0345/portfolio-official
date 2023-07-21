@@ -11,7 +11,7 @@ import session from 'express-session';
 import { Strategy } from 'passport-local';
 import { user } from '../types/user';
 import { getUserByEmail, getUserByID } from '../utils/AuthQueries';
-import { ApiError } from './api_response';
+import { ApiError, ApiResponse } from './api_response';
 import bcrypt from 'bcrypt';
 import dev_log from './dev_log';
 import multer from 'multer';
@@ -83,19 +83,18 @@ export default function initial_config(app: Express) {
         const result = await getUserByEmail(username);
         dev_log({ result });
 
-        if (!result) {
-          return done(JSON.stringify(ApiError('User not found')));
-        }
-
         if ((result as any).status === 'error') {
           return done(JSON.stringify(ApiError(result.message)));
         }
+
+        if (!(result as any).data) {
+          return done(JSON.stringify(ApiError('User not found')));
+        }
         user = {
-          id: (result as user).id,
-          name: (result as user).name,
-          email: (result as user).email,
-          role: (result as user).role,
-          password: (result as user).password,
+          id: (result.data as user).id,
+          name: (result.data as user).name,
+          email: (result.data as user).email,
+          password: (result.data as user).password,
         };
         if (!bcrypt.compareSync(password, user.password)) {
           return done(JSON.stringify(ApiError('Incorrect password')));
@@ -122,11 +121,10 @@ export default function initial_config(app: Express) {
         return done(JSON.stringify(ApiError((result as any).message)));
       }
       userObj = {
-        id: (result as user).id,
-        name: (result as user).name,
-        email: (result as user).email,
-        role: (result as user).role,
-        password: (result as user).password,
+        id: (result.data as user).id,
+        name: (result.data as user).name,
+        email: (result.data as user).email,
+        password: (result.data as user).password,
       };
     } catch (error: any) {
       return done(JSON.stringify(ApiError(error.message)));

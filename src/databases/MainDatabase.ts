@@ -44,7 +44,7 @@ export default class M_Database {
     this.connection.query(`USE ${database}`);
 
     // only for development
-    // this.connection.query('DROP TABLE IF EXISTS posts');
+    this.connection.query('DROP TABLE IF EXISTS posts');
 
     // wait for the database to be created, 300ms should be enough
     setTimeout(() => {
