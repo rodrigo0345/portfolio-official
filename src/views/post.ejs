@@ -1,0 +1,8 @@
+<% layout('/layout/main')%> 
+<% block('title', post.title)%>
+
+<div class="max-w-[1024px]">
+    <img src="/public/<%= post.image %>" alt="<%= post.title %>" class="h-[30vh] object-cover w-full">
+    <h1><%= post.title %></h1>
+    <p><%= post.content %></p>
+</div>

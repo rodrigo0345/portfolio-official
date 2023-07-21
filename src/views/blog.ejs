@@ -1,20 +1,20 @@
 <% layout('/layout/main')%> 
 <% block('title', 'My Blog')%>
 
-<div class="p-10 flex justify-around items-center">
+<div class="p-10 flex justify-around items-center flex-wrap gap-5">
     <h1 class="font-cormorant text-6xl ">My Blog</h1>
     <form action="/blog" method="get" class="relative h-8 flex justify-center">
-        <input type="text" name="search" autofocus placeholder="Search" class="text-lg h-full px-2 outline-none ring-0">
-        <button type="submit" class="bg-red-800 text-white py-1 px-1 text-base h-full hover:bg-red-950 hover:shadow-xl ">Search</button>
+        <input type="text" name="search" autofocus placeholder="Search" class="text-lg h-full px-2 outline-none ring-0 shadow-md">
+        <button type="submit" class="bg-red-800 text-white py-1 px-2 text-base h-full hover:bg-red-950 shadow-md hover:shadow-xl ">Search</button>
     </form>
 </div>
 
 
-<div class="max-w-[1024px] m-auto grid grid-cols-6 grid-rows-6 gap-5 p-4 ">
+<div class="max-w-[1024px] m-auto grid grid-cols-6 gap-5 p-4 ">
     <% for(let [index,data] of posts.entries() || []){  %>
         <article class="lg:col-span-2 md:col-span-3 col-span-6 shadow-lg bg-white p-4 flex flex-col gap-2 rounded-md hover:bg-gray-200 transition-all group">
             <a href="/posts/<%=data.id%>">
-                <img src="/public/<%=data.image%>" class="aspect-video h-max group-hover:opacity-90" alt="">
+                <img height="500" width="1000" src="/public/<%=data.image%>" class="aspect-video h-max group-hover:opacity-90" alt="">
             </a>
             <p class="text-sm bg-red-800 w-fit px-2 py-1 rounded-[1rem] font-semibold text-white"><%=data.category%></p>
             <h2 class="m-0 font-poppins">
@@ -27,5 +27,22 @@
 </div>
 
 <% if(posts.length === 0) { -%>
-    <p class="w-full text-center font-poppins">No posts yet...</p>
+    <p class="w-full text-center font-poppins">No posts yet...
+        <a href="/blog" class="underline">go back</a>
+
+    </p>
+<% } -%>
+
+
+<% if(posts.length !== 0) { -%>
+<div class="w-full flex justify-center gap-5 mt-5">
+
+    <% if(index > 1) { -%>
+        <a href="/blog?index=<%= index-2 %>&search=<%=  searchParams %>"  class="text-lg bg-gray-300 py-1 px-2 text-white font-semibold">< <%= index-1 %> </a>
+    <% } -%>
+    
+
+    <a href="/blog?index=<%= index %>&search=<%=  searchParams %>" class="text-lg bg-red-800 py-1 px-2 text-white font-semibold"><%= index+1 %> ></a>
+    
+</div>
 <% } -%>

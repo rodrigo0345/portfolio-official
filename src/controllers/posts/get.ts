@@ -1,28 +1,25 @@
 import mysql from 'mysql2';
 import { mDatabase, cache } from '../../';
 import { Request, Response } from 'express';
+import dev_log from '../../common/dev_log';
 
-export default async function getPosts(req: Request, res: Response) {
-  const result = await mDatabase.exec(async (connection) => {
-    // check cache
-    const cached = await cache.get('g_posts');
-
-    if (typeof cached === 'string') return cached;
-
-    // if not in cache, get from database
-    const [rows] = await connection.query('SELECT * FROM posts');
-
-    const result: mysql.RowDataPacket[] = rows as mysql.RowDataPacket[];
-
-    // save to cache
-    await cache.save('g_posts', result);
-
-    return result;
-  });
-
-  if (result.status === 'error') {
-    return res.status(500).json(result);
+export default async function getPost(req: Request, res: Response) {
+  const id = req.params.id;
+  if(!id) {
+    return res.redirect('/blog');
   }
 
-  return res.json(result);
+  const data = await mDatabase.exec(async (connection) => {
+    const [rows] = await connection.query('SELECT * FROM posts WHERE id = ?', [id]);
+    return rows;
+  });
+
+  if (data.status === 'error') {
+    return res.redirect('/blog');
+  }
+
+  dev_log({ data });
+
+  const post = data.data[0] as mysql.RowDataPacket;
+  return res.render('post', { post });
 }

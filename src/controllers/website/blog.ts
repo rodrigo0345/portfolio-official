@@ -6,9 +6,8 @@ import dev_log from '../../common/dev_log';
 
 export async function blog(req: Request, res: Response) {
 
-    let searchParams = req.query.search as string | undefined;
-    if(searchParams) 
-        searchParams = searchParams.toLocaleLowerCase();
+    let searchParams = req.query.search? req.query.search as string: '';
+    searchParams = searchParams.toLocaleLowerCase();
 
     const index = req.query.index ? parseInt(req.query.index as string) : 0;
     const pageSize = 16;
@@ -36,5 +35,5 @@ export async function blog(req: Request, res: Response) {
 
     dev_log({ posts });
     
-    res.render('blog', { posts });
+    res.render('blog', { posts, index: index + 1, searchParams });
 }
