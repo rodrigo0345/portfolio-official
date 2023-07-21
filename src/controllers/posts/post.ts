@@ -6,8 +6,11 @@ import { ResultSetHeader } from 'mysql2';
 import dev_log from '../../common/dev_log';
 import sharp from 'sharp';
 import fs from 'fs';
+import protectRoute from '../../common/protect_route';
 
 export default async function postPost(req: Request, res: Response) {
+  protectRoute(req, res, () => {});
+  
   let { title, content, category } = req.body;
   const file = req.file;
 

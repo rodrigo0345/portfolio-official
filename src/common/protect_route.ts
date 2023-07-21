@@ -7,5 +7,5 @@ export default function protectRoute(req: any, res: any, next: any) {
   if (req.isAuthenticated()) {
     return next();
   }
-  return res.status(401).json(ApiError('Unauthorized'));
+  return res.redirect('/blog');
 }

@@ -21,5 +21,5 @@ export default async function getPost(req: Request, res: Response) {
   dev_log({ data });
 
   const post = data.data[0] as mysql.RowDataPacket;
-  return res.render('post', { post });
+  return res.render('post', { post, user: req.user });
 }

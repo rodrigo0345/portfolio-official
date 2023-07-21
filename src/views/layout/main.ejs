@@ -28,7 +28,11 @@
                 <a href="/blog" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all">My Blog</a>
             </li>
             <li>
-                <a href="/login" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all">Login</a>
+                <% if(user) { -%>
+                    <a href="<% if(user.email == 'rodrigocralha@gmail.com') { -%>/makepost<% } else { -%>/#<% } -%>" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all"><%= user.name %></a>
+                <% } else { -%>
+                    <a href="/login" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all">Login</a>
+                <% } -%>
             </li>
         </ul>
     </header>
