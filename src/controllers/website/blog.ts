@@ -6,13 +6,27 @@ import dev_log from '../../common/dev_log';
 
 export async function blog(req: Request, res: Response) {
 
+    let searchParams = req.query.search as string | undefined;
+    if(searchParams) 
+        searchParams = searchParams.toLocaleLowerCase();
+
     const index = req.query.index ? parseInt(req.query.index as string) : 0;
     const pageSize = 16;
-    
-    const data = await mDatabase.exec(async (connection) => {
-        const [rows] = await connection.query('SELECT * FROM posts ORDER BY id DESC LIMIT ?, ?', [index, pageSize]);
-        return rows;
-    });
+
+    const data = searchParams?
+        await mDatabase.exec(async (connection) => {
+            const [rows] = await connection.query(`
+            SELECT * FROM posts 
+            WHERE title LIKE CONCAT('%', ?, '%')
+            ORDER BY id DESC LIMIT ?, ?`, 
+            [searchParams, index, pageSize]);
+            return rows;
+        })
+        : 
+        await mDatabase.exec(async (connection) => {
+            const [rows] = await connection.query('SELECT * FROM posts ORDER BY id DESC LIMIT ?, ?', [index, pageSize]);
+            return rows;
+        });    
 
     if(data.status === 'error') {
         return res.render('blog', { posts: [], error: data.message });

@@ -8,8 +8,18 @@ import sharp from 'sharp';
 import fs from 'fs';
 
 export default async function postPost(req: Request, res: Response) {
-  const { title, content, category } = req.body;
+  let { title, content, category } = req.body;
   const file = req.file;
+
+  if (!title || !content || !category) {
+    return res.redirect('/makepost');
+  }
+
+  if (typeof title !== 'string' || typeof content !== 'string' || typeof category !== 'string') {
+    return res.redirect('/makepost');
+  }
+
+  category = category.toLowerCase();
 
   if (!file) {
     return res.redirect('/makepost');
