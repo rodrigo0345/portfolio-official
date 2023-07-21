@@ -37,11 +37,11 @@
 <div class="w-full flex justify-center gap-5 mt-5">
 
     <% if(index > 1) { -%>
-        <a href="/blog?index=<%= index-2 %>&search=<%=  searchParams %>"  class="text-lg bg-gray-300 py-1 px-2 text-white font-semibold">< <%= index-1 %> </a>
+        <a href="/blog?index=<%= index-2 %>&search=<%=  searchParams %>"  class="text-lg bg-gray-300 py-2 px-4 text-white font-semibold rounded-full hover:bg-gray-400 transition-all shadow-lg"><%= index-1 %> </a>
     <% } -%>
     
 
-    <a href="/blog?index=<%= index %>&search=<%=  searchParams %>" class="text-lg bg-red-800 py-1 px-2 text-white font-semibold"><%= index+1 %> ></a>
+    <a href="/blog?index=<%= index %>&search=<%=  searchParams %>" class="text-lg bg-red-800 py-2 px-4 rounded-full hover:bg-red-900 text-white font-semibold shadow-lg"><%= index+1 %> </a>
     
 </div>
 <% } -%>
