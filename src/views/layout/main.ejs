@@ -12,8 +12,25 @@
 
 </head>
 <body class="w-full">
+
+    <script>
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            header.classList.toggle('glass-effect', window.scrollY > 300);
+        })
+    </script>
     
-    <header class="">
+    <header class="flex justify-around z-20 p-4 text-black sticky top-0 items-center bg-[#F8FAF9] transition-all ">
+        <a href="/" class="font-cormorant">Rodrigo Casanova</a>
+
+        <ul class="flex gap-10 text-lg">
+            <li>
+                <a href="/blog" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all">My Blog</a>
+            </li>
+            <li>
+                <a href="/login" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all">Login</a>
+            </li>
+        </ul>
     </header>
 
     <%-body -%>

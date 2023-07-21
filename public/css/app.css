@@ -32,6 +32,10 @@ body {
     
 }
 
+.almost-white {
+    color: rgb(255, 255, 255);
+}
+
 .top-section .left {
     background-color: rgb(248, 250, 249, var(--background-opacity));
 }
@@ -131,5 +135,13 @@ body {
 
 .expand-right-reverse {
     transform: translateX(calc(-1% * (var(--scroll-unlimited)) * 100 / 75));
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.24);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5.5px);
+    -webkit-backdrop-filter: blur(5.5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
