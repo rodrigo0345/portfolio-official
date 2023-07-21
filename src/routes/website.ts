@@ -10,3 +10,6 @@ websiteRouter.get('/blog', blog);
 websiteRouter.get('/makepost', (req, res) => {
     res.render('makepost');
 });
+websiteRouter.get('/login', (req, res) => {
+    res.render('login');
+});
