@@ -2974,6 +2974,10 @@ body {
     width: 28em;
   }
 
+  .md\:max-w-\[20rem\] {
+    max-width: 20rem;
+  }
+
   .md\:grid-rows-6 {
     grid-template-rows: repeat(6, minmax(0, 1fr));
   }

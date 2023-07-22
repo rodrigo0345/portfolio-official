@@ -14,11 +14,12 @@ export async function blog(req: Request, res: Response) {
 
     const data = searchParams?
         await mDatabase.exec(async (connection) => {
+            const offset = index * pageSize;
             const [rows] = await connection.query(`
             SELECT * FROM posts 
             WHERE title LIKE CONCAT('%', ?, '%')
             ORDER BY id DESC LIMIT ?, ?`, 
-            [searchParams, index, pageSize]);
+            [searchParams, offset, pageSize]);
             return rows;
         })
         : 
