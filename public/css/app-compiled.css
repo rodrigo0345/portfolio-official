@@ -1381,6 +1381,14 @@ video {
   height: 80vh;
 }
 
+.h-\[5vh\] {
+  height: 5vh;
+}
+
+.h-\[6vh\] {
+  height: 6vh;
+}
+
 .min-h-screen {
   min-height: 100vh;
 }
@@ -1453,6 +1461,18 @@ video {
 
 .w-80 {
   width: 20rem;
+}
+
+.w-\[5vh\] {
+  width: 5vh;
+}
+
+.w-\[30vh\] {
+  width: 30vh;
+}
+
+.w-\[6vh\] {
+  width: 6vh;
 }
 
 .max-w-\[1024px\] {
@@ -1529,6 +1549,10 @@ video {
 
 .overflow-hidden {
   overflow: hidden;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
 }
 
 .whitespace-pre-line {
@@ -1687,6 +1711,14 @@ video {
   padding: 1rem;
 }
 
+.p-0 {
+  padding: 0px;
+}
+
+.p-5 {
+  padding: 1.25rem;
+}
+
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
@@ -1735,6 +1767,11 @@ video {
 .py-10 {
   padding-top: 2.5rem;
   padding-bottom: 2.5rem;
+}
+
+.px-5 {
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .pb-8 {
@@ -1835,6 +1872,11 @@ video {
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .font-semibold {
@@ -2237,8 +2279,45 @@ body {
     grid-column: span 4 / span 4;
   }
 
+  .md\:m-auto {
+    margin: auto;
+  }
+
   .md\:block {
     display: block;
+  }
+
+  .md\:h-\[10vh\] {
+    height: 10vh;
+  }
+
+  .md\:h-\[40vh\] {
+    height: 40vh;
+  }
+
+  .md\:w-\[10vh\] {
+    width: 10vh;
+  }
+
+  .md\:w-\[40vh\] {
+    width: 40vh;
+  }
+
+  .md\:w-80 {
+    width: 20rem;
+  }
+
+  .md\:w-fit {
+    width: -moz-fit-content;
+    width: fit-content;
+  }
+
+  .md\:w-96 {
+    width: 24rem;
+  }
+
+  .md\:w-\[28em\] {
+    width: 28em;
   }
 
   .md\:grid-rows-6 {
@@ -2247,6 +2326,14 @@ body {
 
   .md\:border-t-4 {
     border-top-width: 4px;
+  }
+
+  .md\:p-0 {
+    padding: 0px;
+  }
+
+  .md\:p-10 {
+    padding: 2.5rem;
   }
 
   .md\:px-0 {
@@ -2262,6 +2349,21 @@ body {
   .md\:text-3xl {
     font-size: 1.875rem;
     line-height: 2.25rem;
+  }
+
+  .md\:text-5xl {
+    font-size: 3rem;
+    line-height: 1;
+  }
+
+  .md\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  .md\:text-xl {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
   }
 
   .md\:text-transparent {

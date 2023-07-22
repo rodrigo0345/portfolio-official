@@ -2,13 +2,13 @@
 <% block('title', 'Login')%>
 
 
-<form action="/auth/login" method="post" class="flex flex-col max-w-[1024px] gap-5 m-auto w-fit p-10 py-[20vh]" onsubmit="(e) => {e.preventDefault()}">
+<form action="/auth/login" method="post" class="flex flex-col max-w-[1024px] gap-5 md:m-auto md:w-fit md:p-10 px-5 py-[20vh]" onsubmit="(e) => {e.preventDefault()}">
 
-    <h1 class="font-cormorant text-5xl border-b-2 border-dashed border-black pb-4">New post</h1>
+    <h1 class="font-cormorant md:text-5xl text-4xl border-b-2 border-dashed border-black pb-4">Login</h1>
 
     <div class="flex flex-col">
         <label for="username" class="text-lg font-poppins">Email</label>
-        <input type="email" name="username" class="outline-none px-2 text-lg py-1 almost-white w-96 font-poppins shadow-sm" />
+        <input type="email" name="username" class="outline-none px-2 text-lg py-1 almost-white md:w-96 font-poppins shadow-sm" />
     </div>
   
     <div class="flex flex-col">
