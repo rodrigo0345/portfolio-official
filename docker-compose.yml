@@ -17,13 +17,13 @@ services:
     build:
       context: .
     ports:
-      - '8000:8000'
+      - '8000:${PORT}'
     volumes:
       - ./src:/workspace/src
       - ./public:/workspace/public
     environment:
       - NODE_ENV=development
-      - PORT=8000
+      - PORT=${PORT}
       # if you change this, change the MYSQL_DATABASE in the main_db service
       - DATABASE_NAME=${M_DATABASE_NAME}
       - M_DATABASE_PORT=${M_DATABASE_PORT}
