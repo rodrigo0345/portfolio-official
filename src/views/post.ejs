@@ -8,7 +8,17 @@
             <div>
                 <h1 class=" font-cormorant md:text-9xl text-6xl py-4 "><%= post.title %></h1>
                 <div class="flex flex-wrap gap-5 border-b-2 pb-8 border-dashed border-zinc-700">
-                    <p class="text-sm bg-red-800 w-fit px-2 py-1 rounded-[1rem] font-semibold text-white uppercase"><%=post.category%></p>
+                    <div class="flex items-center gap-2">
+                        <p class="text-sm bg-red-800 w-fit px-2 py-1 rounded-[1rem] font-semibold text-white uppercase"><%=post.category%></p>
+                        <% if(user && user.email === "rodrigocralha@gmail.com"){ -%>
+                            <form action="/posts/delete/<%= post.id %>" method="post" class="h-fit w-fit flex items-center" onsubmit="(e) => {e.preventDefault()}">
+                                <button type="submit" class="text-sm bg-red-500 w-fit px-2 py-1 rounded-[1rem] font-semibold text-white uppercase">
+                                    Delete
+                                </button>
+                            </form>
+                            
+                        <% } -%>
+                    </div>
     
                     <p class="text-lg">Posted at: <span  class=" text-red-700 font-poppins italic"><%= post.created_at.toLocaleString('en-GB', { timeZone: 'UTC' }) %></span></p>
     
