@@ -1,8 +1,8 @@
 <% layout('/layout/main')%> 
 <% block('title', post.title)%>
 
-<div class="w-full min-h-screen bg-[url('/public/img/cool-background.png')] bg-cover bg-fixed backdrop-blur-sm">
-    <div class="max-w-[1024px] m-auto">
+<div class="w-full min-h-screen  bg-cover bg-fixed backdrop-blur-sm bg-blend-darken">
+    <div class="max-w-[1024px] m-auto shadow-xl">
         <img src="/public/<%= post.image %>" width="1000" height="500" alt="<%= post.title %>" class="h-[30vh] object-cover w-full">
         <article class="px-20 py-4 bg-white">
             <div>

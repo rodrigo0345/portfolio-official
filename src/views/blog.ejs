@@ -10,9 +10,9 @@
 </div>
 
 
-<div class="max-w-[1024px] m-auto grid grid-cols-6 gap-5 p-4 ">
+<div class="max-w-[1024px] m-auto grid grid-cols-6 gap-5 p-4 pt-10 border-t-2  border-dashed border-black">
     <% for(let [index,data] of posts.entries() || []){  %>
-        <article class="lg:col-span-2 md:col-span-3 col-span-6 shadow-lg bg-white p-4 flex flex-col gap-2 hover:bg-gray-200 transition-all group">
+        <article class="md:col-span-3 col-span-6 shadow-lg bg-white p-4 flex flex-col gap-2 hover:bg-gray-200 transition-all group">
             <a href="/posts/<%=data.id%>">
                 <img height="500" width="1000" loading="lazy" src="/public/<%=data.image%>" class="aspect-video h-max group-hover:opacity-90" alt="">
             </a>
@@ -34,7 +34,7 @@
 
 
 <% if(posts.length !== 0) { -%>
-<div class="w-full flex justify-center gap-5 mt-5">
+<div class="w-full flex justify-center gap-5 mt-5 pb-10">
 
     <% if(index > 1) { -%>
         <a href="/blog?index=<%= index-2 %>&search=<%=  searchParams %>"  class="text-lg bg-gray-300 py-2 px-4 text-white font-semibold rounded-full hover:bg-gray-400 transition-all shadow-lg"><%= index-1 %> </a>

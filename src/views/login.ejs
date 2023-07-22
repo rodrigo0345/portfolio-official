@@ -4,7 +4,7 @@
 
 <form action="/auth/login" method="post" class="flex flex-col max-w-[1024px] gap-5 m-auto w-fit p-10 py-[20vh]" onsubmit="(e) => {e.preventDefault()}">
 
-    <h1 class="font-cormorant">Login</h1>
+    <h1 class="font-cormorant text-5xl border-b-2 border-dashed border-black pb-4">New post</h1>
 
     <div class="flex flex-col">
         <label for="username" class="text-lg font-poppins">Email</label>
@@ -21,10 +21,9 @@
 
         <div class="flex justify-between gap-5 flex-row-reverse">
             <button type="submit" class="bg-red-800 hover:bg-red-900 hover:shadow-xl text-white font-semibold py-1 px-2 shadow-lg">Submit</button>
-            <button type="cancel" class="bg-gray-400 hover:bg-gray-500 hover:shadow-xl text-white font-semibold py-1 px-2 shadow-lg">Cancel</button>
+            <a href="/blog" class="bg-gray-400 hover:bg-gray-500 hover:shadow-xl text-white font-semibold py-1 px-2 shadow-lg">Cancel</a>
         </div>
     </div>
-
     
 </form>
 

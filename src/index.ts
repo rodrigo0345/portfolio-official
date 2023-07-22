@@ -37,6 +37,8 @@ setTimeout(() => {
   cache = new Cache(process.env.REDIS_URL);
 }, 10000)
 
+export const adminEmail = process.env.EMAIL;
+dev_log({ adminEmail });
 
 const app = express();
 initial_config(app);
