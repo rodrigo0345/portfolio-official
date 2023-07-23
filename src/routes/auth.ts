@@ -15,7 +15,6 @@ authRouter.post('/login', passport.authenticate('local', {
 }), (req, res) => {
   res.redirect('/blog');
 });
-authRouter.get('/user', protectRoute, getUser);
 authRouter.get('/logout', (req, res) => {
   req.logout(function(err) {
     

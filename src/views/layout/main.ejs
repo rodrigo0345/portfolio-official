@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="/public/css/app-compiled.css">
 
 </head>
-<body class="w-full">
+<body class="w-full bg-gray-200">
 
     <% if(flash) { -%>
         <div id="flash" class="fixed -left-[999px] top-20 z-50 text-white font-semibold md:text-base text-sm p-4 shadow-xl bg-red-400 transition-all">
@@ -24,19 +24,21 @@
     <% } -%>
 
     <script>
-        const flash = document.getElementById('flash');
-        flash.classList.remove('-left-[999px]');
-        flash.classList.add('left-0');
-        setTimeout(() => {
-            flash.classList.remove('left-0');
-            flash.classList.add('-left-[999px]');
-
+        try{
+            const flash = document.getElementById('flash');
+            flash.classList.remove('-left-[999px]');
+            flash.classList.add('left-0');
             setTimeout(() => {
-                flash.classList.add('hidden');
-            }, 2000);
-            
-        }, 5000);
+                flash.classList.remove('left-0');
+                flash.classList.add('-left-[999px]');
 
+                setTimeout(() => {
+                    flash.classList.add('hidden');
+                }, 2000);
+                
+            }, 5000);
+        } catch (e) {}
+        
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             header.classList.toggle('glass-effect', window.scrollY > 300);
@@ -48,13 +50,13 @@
 
         <ul class="flex gap-10 text-lg">
             <li>
-                <a href="/blog" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all md:text-xl text-sm">My Blog</a>
+                <a href="/blog" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all md:text-xl text-sm after:transform-gpu">My Blog</a>
             </li>
             <li>
                 <% if(user) { -%>
-                    <a href="<% if(user.email == 'rodrigocralha@gmail.com') { -%>/makepost<% } else { -%>/#<% } -%>" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all md:text-xl text-sm"><%= user.name %></a>
+                    <a href="<% if(user.email == 'rodrigocralha@gmail.com') { -%>/makepost<% } else { -%>/logout<% } -%>" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all md:text-xl text-sm after:transform-gpu"><%= user.name %></a>
                 <% } else { -%>
-                    <a href="/login" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all md:text-xl text-sm">Login</a>
+                    <a href="/login" class=" after:bg-red-800 after:h-1 after:w-full after:absolute after:-bottom-1 after:left-0 relative hover:after:-bottom-2 after:transition-all transition-all md:text-xl text-sm after:transform-gpu">Login</a>
                 <% } -%>
             </li>
         </ul>

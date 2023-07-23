@@ -18,3 +18,9 @@ websiteRouter.get('/login', (req, res) => {
 websiteRouter.get('/register', (req, res) => {
     res.render('register', { user: req.user, flash: getFlash('message', req, res)});
 });
+websiteRouter.get('/logout', (req, res) => {
+    return res.render('logout', { user: req.user, flash: getFlash('message', req, res)});
+});
+websiteRouter.get('/robots.txt', (req, res) => {
+    return res.redirect('/public/robots.txt');
+});
