@@ -10,7 +10,7 @@ export const websiteRouter = Router();
 websiteRouter.get('/', index);
 websiteRouter.get('/blog', blog);
 websiteRouter.get('/makepost', protectRoute, (req, res) => {
-    res.render('makepost', { user: req.user});
+    res.render('makepost', { user: req.user, flash: getFlash('message', req, res)});
 });
 websiteRouter.get('/login', (req, res) => {
     res.render('login', { user: req.user, flash: getFlash('message', req, res)});
