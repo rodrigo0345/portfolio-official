@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import dev_log from './dev_log';
 
-export default function flash(key: string, value: string, res: Response) {
+export function flash(key: string, value: string, res: Response) {
     res.cookie(key, value);
 }
 

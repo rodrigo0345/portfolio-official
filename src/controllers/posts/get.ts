@@ -2,7 +2,7 @@ import mysql from 'mysql2';
 import { mDatabase, cache } from '../../';
 import { Request, Response } from 'express';
 import dev_log from '../../common/dev_log';
-import flash, { getFlash } from '../../common/flash';
+import {flash, getFlash } from '../../common/flash';
 
 export default async function getPost(req: Request, res: Response) {
   const id = req.params.id;

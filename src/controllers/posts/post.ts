@@ -7,7 +7,7 @@ import dev_log from '../../common/dev_log';
 import sharp from 'sharp';
 import fs from 'fs';
 import protectRoute from '../../common/protect_route';
-import flash from '../../common/flash';
+import {flash} from '../../common/flash';
 
 export default async function postPost(req: Request, res: Response) {
   protectRoute(req, res, () => {});

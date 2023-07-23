@@ -11,13 +11,14 @@ authRouter.post('/register', postRegister);
 authRouter.post('/login', passport.authenticate('local', {
   successRedirect: '/blog',
   failureRedirect: '/login',
+  failureFlash: true
 }), (req, res) => {
   res.redirect('/blog');
 });
 authRouter.get('/user', protectRoute, getUser);
 authRouter.get('/logout', (req, res) => {
   req.logout(function(err) {
-    res.redirect('/');
+    
   });
-  res.redirect('/login');
+  return res.redirect('/login');
 });

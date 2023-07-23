@@ -17,6 +17,7 @@ import dev_log from './dev_log';
 import multer from 'multer';
 import path from 'path';
 import flash from 'connect-flash';
+import { flash as myFlash } from './flash';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
@@ -85,11 +86,11 @@ export default function initial_config(app: Express) {
         dev_log({ result });
 
         if ((result as any).status === 'error') {
-          return done(JSON.stringify(ApiError(result.message)));
+          return done(null, false, { message: result.message });
         }
 
         if (!(result as any).data) {
-          return done(JSON.stringify(ApiError('User not found')));
+          return done(null, false, { message: 'User not found.' });
         }
         user = {
           id: (result.data as user).id,
@@ -98,11 +99,11 @@ export default function initial_config(app: Express) {
           password: (result.data as user).password,
         };
         if (!bcrypt.compareSync(password, user.password)) {
-          return done(JSON.stringify(ApiError('Incorrect password')));
+          return done(null, false, { message: 'Incorrect password.' });
         }
         return done(null, user);
       } catch (error: any) {
-        return done(JSON.stringify(ApiError(error.message)));
+        return done(null, false, { message: 'Incorrect password.' });
       }
     }),
   );

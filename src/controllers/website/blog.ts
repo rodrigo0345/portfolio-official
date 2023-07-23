@@ -37,5 +37,5 @@ export async function blog(req: Request, res: Response) {
 
     dev_log({ posts, user: req.user });
     
-    res.render('blog', { posts, index: index + 1, searchParams, user: req.user, flash: getFlash('message', req, res) });
+    return res.render('blog', { posts, index: index + 1, searchParams, user: req.user, flash: getFlash('message', req, res) });
 }

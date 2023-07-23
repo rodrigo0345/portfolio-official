@@ -6,7 +6,7 @@ import tables from '../../types/db';
 import { ResultSetHeader } from 'mysql2';
 import bcrypt from 'bcrypt';
 import dev_log from '../../common/dev_log';
-import flash from '../../common/flash';
+import {flash} from '../../common/flash';
 
 export default async function postRegister(req: Request, res: Response) {
   dev_log({ body: req.body });

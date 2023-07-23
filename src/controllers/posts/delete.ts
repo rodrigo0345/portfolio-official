@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { ApiError } from '../../common/api_response';
 import { mDatabase } from '../..';
-import flash from '../../common/flash';
+import {flash} from '../../common/flash';
 
 export async function deletePost(req: Request, res: Response) {
 
