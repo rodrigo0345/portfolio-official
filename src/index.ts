@@ -8,6 +8,8 @@ import { authRouter } from './routes/auth';
 import { websiteRouter } from './routes/website';
 import path from 'path';
 import ejsLocals from 'ejs-locals';
+import { get } from 'http';
+import { getFlash } from './common/flash';
 
 /* 
     Here is the entry point of the application.
@@ -55,7 +57,10 @@ app.use('/posts', router);
 app.use('/auth', authRouter);
 app.use('/', websiteRouter);
 
-
+//The 404 Route (ALWAYS Keep this as the last route)
+app.get('*', function(req, res){
+  res.render('404', { user: req.user, flash: getFlash('message', req, res) });
+});
 
 // used '0.0.0.0' to use within docker, if not using docker, it is not needed
 const server = app.listen(
