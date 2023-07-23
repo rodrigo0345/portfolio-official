@@ -24,3 +24,6 @@ websiteRouter.get('/logout', (req, res) => {
 websiteRouter.get('/robots.txt', (req, res) => {
     return res.redirect('/public/robots.txt');
 });
+websiteRouter.get('/sitemap.xml', (req, res) => {
+    return res.redirect('/public/sitemap.xml');
+});
