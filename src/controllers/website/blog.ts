@@ -3,6 +3,7 @@ import { mDatabase } from '../..';
 import { ApiResponse } from '../../common/api_response';
 import mysql from 'mysql2';
 import dev_log from '../../common/dev_log';
+import { getFlash } from '../../common/flash';
 
 export async function blog(req: Request, res: Response) {
 
@@ -36,5 +37,5 @@ export async function blog(req: Request, res: Response) {
 
     dev_log({ posts, user: req.user });
     
-    res.render('blog', { posts, index: index + 1, searchParams, user: req.user });
+    res.render('blog', { posts, index: index + 1, searchParams, user: req.user, flash: getFlash('message', req, res) });
 }

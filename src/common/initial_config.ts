@@ -16,6 +16,7 @@ import bcrypt from 'bcrypt';
 import dev_log from './dev_log';
 import multer from 'multer';
 import path from 'path';
+import flash from 'connect-flash';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
@@ -62,7 +63,7 @@ export default function initial_config(app: Express) {
   app.use(
     session({
       secret: process.env.SESSION_SECRET ?? 'secret',
-      resave: false,
+      resave: true,
       saveUninitialized: true,
       proxy: true,
       cookie: {
@@ -105,6 +106,12 @@ export default function initial_config(app: Express) {
       }
     }),
   );
+
+  app.use(flash());
+  app.use(function (req, res, next) {
+    res.locals.messages = req.flash();
+    next();
+  });
 
   passport.serializeUser(function (user: any, done: any) {
     process.nextTick(function () {

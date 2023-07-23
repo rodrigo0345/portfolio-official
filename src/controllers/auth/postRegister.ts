@@ -6,6 +6,7 @@ import tables from '../../types/db';
 import { ResultSetHeader } from 'mysql2';
 import bcrypt from 'bcrypt';
 import dev_log from '../../common/dev_log';
+import flash from '../../common/flash';
 
 export default async function postRegister(req: Request, res: Response) {
   dev_log({ body: req.body });
@@ -13,7 +14,8 @@ export default async function postRegister(req: Request, res: Response) {
   const email = username;
 
   if (!email || !password || !name) {
-    return res.status(400).json(ApiError('Missing required fields'));
+    flash('message', 'Missing required fields', res)
+    return res.redirect('/register');
   }
 
   try {
@@ -23,14 +25,16 @@ export default async function postRegister(req: Request, res: Response) {
       name,
     });
   } catch (err: any) {
-    return res.status(400).json(ApiError(err.message));
+    flash('message', 'Invalid data, try again', res)
+    return res.redirect('/register');
   }
 
   let hashedPassword: string;
   try {
     hashedPassword = await bcrypt.hash(password, 10);
   } catch (err: any) {
-    return res.status(500).json(ApiError(err.message));
+    flash('message', 'Problem hashing password, please try again later', res)
+    return res.redirect('/register');
   }
 
   const sqlCommand = tables.find(
@@ -46,6 +50,7 @@ export default async function postRegister(req: Request, res: Response) {
   });
 
   if (result.status === 'error') {
+    flash('message', result.message, res);
     return res.redirect('/register');
   }
 

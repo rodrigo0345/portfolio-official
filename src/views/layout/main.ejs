@@ -17,7 +17,26 @@
 </head>
 <body class="w-full">
 
+    <% if(flash) { -%>
+        <div id="flash" class="fixed -left-[999px] top-20 z-50 text-white font-semibold md:text-base text-sm p-4 shadow-xl bg-red-400 transition-all">
+            <%= flash %>
+        </div>
+    <% } -%>
+
     <script>
+        const flash = document.getElementById('flash');
+        flash.classList.remove('-left-[999px]');
+        flash.classList.add('left-0');
+        setTimeout(() => {
+            flash.classList.remove('left-0');
+            flash.classList.add('-left-[999px]');
+
+            setTimeout(() => {
+                flash.classList.add('hidden');
+            }, 2000);
+            
+        }, 5000);
+
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             header.classList.toggle('glass-effect', window.scrollY > 300);

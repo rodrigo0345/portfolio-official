@@ -7,6 +7,7 @@ import dev_log from '../../common/dev_log';
 import sharp from 'sharp';
 import fs from 'fs';
 import protectRoute from '../../common/protect_route';
+import flash from '../../common/flash';
 
 export default async function postPost(req: Request, res: Response) {
   protectRoute(req, res, () => {});
@@ -15,20 +16,24 @@ export default async function postPost(req: Request, res: Response) {
   const file = req.file;
 
   if (!title || !content || !category) {
+    flash('message', 'Missing required fields', res);
     return res.redirect('/makepost');
   }
 
   if (typeof title !== 'string' || typeof content !== 'string' || typeof category !== 'string') {
+    flash('message', 'Invalid data, try again', res);
     return res.redirect('/makepost');
   }
 
   category = category.toLowerCase();
 
   if (!file) {
+    flash('message', 'Missing image', res);
     return res.redirect('/makepost');
   }
 
   if (!req.file?.path) {
+    flash('message', 'Missing image', res);
     return res.redirect('/makepost');
   }
 
@@ -52,6 +57,7 @@ export default async function postPost(req: Request, res: Response) {
         fs.unlinkSync(req.file?.path ?? '');
       });
   } catch (err: any) {
+    flash('message', 'Problem compressing image, please try again', res);
     return res.redirect('/makepost');
   }
 
@@ -63,7 +69,8 @@ export default async function postPost(req: Request, res: Response) {
   });
 
   if (result.status === 'error') {
-    return res.status(500).json(result);
+    flash('message', result.message, res);
+    return res.redirect('/makepost');
   }
   return res.redirect('/blog');
 }
