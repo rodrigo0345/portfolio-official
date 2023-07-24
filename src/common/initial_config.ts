@@ -34,7 +34,7 @@ export default function initial_config(app: Express) {
   // use this when you are behind a proxy (e.g. nginx) (to me this made nginx not work... so I disable it as default)
   // app.set('trust proxy', 1);
 
-  app.use('/public', express.static('public')); // serve files from the public directory
+  app.use('/public', express.static(path.join(__dirname, "../../public"))); // serve files from the public directory
   app.use(cookieParser());
   app.use(rateLimiterUsingThirdParty); // rate limit users based on the IP address
   app.use(bp.urlencoded({ extended: true }));

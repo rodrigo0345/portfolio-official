@@ -20,7 +20,6 @@ function setScrollVarUnlimited() {
     const htmlElement = document.documentElement
     const percentOfScreenHeightScrolled =
       htmlElement.scrollTop / htmlElement.clientHeight
-      console.log(percentOfScreenHeightScrolled * 100)
     htmlElement.style.setProperty(
       "--scroll-unlimited",
       percentOfScreenHeightScrolled * 100
