@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "tsnd ./src/index.ts",
-    "local": "sudo systemctl start mysql; redis-server & tsnd ./index.ts;"
+    "local": "sudo systemctl start mysql; redis-server & tsnd ./index.ts;",
+    "build": "tsc -p ./tsconfig.json"
   },
   "author": "Rodrigo Casanova",
   "license": "ISC",
