@@ -4,10 +4,10 @@
 
 <div class="w-full min-h-screen  bg-cover bg-fixed backdrop-blur-sm bg-blend-darken">
     <div class="max-w-[1024px] m-auto shadow-xl">
-        <img src="/public/<%= post.image %>" width="1000" height="500" alt="<%= post.title %>" class="h-[30vh] object-cover w-full">
-        <article class="md:px-20 px-5 py-4 bg-white">
+        <img src="/public/<%= post.image %>" width="1000" height="500" alt="<%= post.title %>" class="h-[30vh] object-cover w-full sticky -z-10 top-0 left-0">
+        <article class="md:px-20 px-5 py-4 bg-white z-50">
             <div>
-                <h1 class=" font-cormorant md:text-9xl text-6xl py-4 "><%= post.title %></h1>
+                <h1 class=" font-cormorant md:text-7xl text-6xl py-4"><%= post.title %></h1>
                 <div class="flex flex-wrap gap-5 border-b-2 pb-8 border-dashed border-zinc-700">
                     <div class="flex items-center gap-2">
                         <p class="text-sm bg-red-800 w-fit px-2 py-1 rounded-[1rem] font-semibold text-white uppercase"><%=post.category%></p>
@@ -30,7 +30,7 @@
                     <textarea name="content" cols="30" rows="10" ><%= post.content %></textarea>
                     <button type="submit" class="bg-blue-400 p-2 shadow-lg text-lg text-white hover:bg-blue-500">Save</button>
                 </form>
-                <md-block id="content-field" class="text-gray-800 text-xl mt-4 prose md:prose-lg prose-sm font-poppins"><%= post.content %></md-block>
+                <md-block id="content-field" class="text-gray-800 text-xl mt-4 prose  prose-sm font-poppins"><%= post.content %></md-block>
             </div>
         </article>
     </div>
