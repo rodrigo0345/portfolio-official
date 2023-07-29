@@ -5,7 +5,7 @@ FROM node:lts AS node
 WORKDIR /workspace
 
 # Copy package.json and package-lock.json to the working directory
-COPY package.json ./
+COPY package.json package-lock.json ./
 
 # Update npm to the latest version
 RUN npm install -g npm@9.8.1
