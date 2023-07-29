@@ -43,6 +43,7 @@ export const adminEmail = process.env.EMAIL;
 dev_log({ adminEmail });
 
 const app = express();
+
 initial_config(app);
 
 // for logging purposes

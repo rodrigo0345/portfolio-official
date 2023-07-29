@@ -21,7 +21,7 @@ import { flash as myFlash } from './flash';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
-  max: 300,
+  max: 100,
   message: 'You have exceeded the 100 requests in 2 minutes limit!',
   standardHeaders: true,
   legacyHeaders: false,
@@ -32,7 +32,8 @@ export default function initial_config(app: Express) {
   dotenv.config();
 
   // use this when you are behind a proxy (e.g. nginx) (to me this made nginx not work... so I disable it as default)
-  // app.set('trust proxy', 1);
+  if(process.env.NODE_ENV === 'production')
+    app.set('trust proxy', 1);
 
   app.use('/public', express.static(path.join(__dirname, "../../public"))); // serve files from the public directory
   app.use(cookieParser());
