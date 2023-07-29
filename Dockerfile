@@ -10,12 +10,8 @@ COPY package.json ./
 # Update npm to the latest version
 RUN npm install -g npm@9.8.1
 
-# Clear npm cache
-RUN npm cache clean --force
-RUN npm rebuild
-
 # Install app dependencies (ignore the deprecated package warning)
-RUN npm install --force
+RUN npm ci
 
 # Copy the rest of the app source code
 COPY ./src ./src
