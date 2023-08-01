@@ -66,14 +66,12 @@ export default function initial_config(app: Express) {
   app.use(
     session({
       secret: process.env.SESSION_SECRET ?? 'secret',
-      resave: false,
-      saveUninitialized: true,
-      proxy: false,
+      resave: true,
+      saveUninitialized: false,
       cookie: {
         secure: process.env.NODE_ENV === 'development' ? false : true,
         httpOnly: process.env.NODE_ENV === 'development' ? false : true,
         sameSite: process.env.NODE_ENV === 'development' ? false : 'none',
-        maxAge: 1000 * 60 * 60 * 48
       },
     }),
   );
