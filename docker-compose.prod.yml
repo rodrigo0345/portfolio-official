@@ -17,7 +17,7 @@ services:
     build:
       context: .
     ports:
-      - '8000:${PORT}'
+      - '3000:${PORT}'
     volumes:
       - ./src:/workspace/src
       - ./public:/workspace/public
