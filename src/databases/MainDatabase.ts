@@ -11,7 +11,12 @@ import path from 'path';
     The class is used to execute queries and return the result without worrying about the connection and catching errors.
 */
 export default class M_Database {
-  connection;
+  connection: any | undefined;
+  port;
+  host;
+  user;
+  password;
+  database;
 
   constructor(
     db_port: string | undefined,
@@ -20,38 +25,21 @@ export default class M_Database {
     db_password: string | undefined,
     db_name: string | undefined,
   ) {
-    const port = Number.parseInt(db_port ?? '3306');
-    const host = db_host || 'localhost'; // Use the service name 'db' here
-    const user = db_user || 'root';
-    const password = db_password || 'password';
-    const database = db_name || 'main';
+    this.port = Number.parseInt(db_port ?? '3306');
+    this.host = db_host || 'localhost'; // Use the service name 'db' here
+    this.user = db_user || 'root';
+    this.password = db_password || 'password';
+    this.database = db_name || 'main';
 
-    dev_log({ host, port, user, password, database });
+    dev_log({ host: this.host, post: this.port, user: this.user, password: this.password, database: this.database });
 
-    this.connection = mysql
-      .createPool({
-        host: host,
-        port: port,
-        user: user,
-        password: password,
-        database: database,
-      })
-      .promise();
-
-    // CREATE DATABASE IF NOT EXISTS redis_mysql
-    this.connection.query(`CREATE DATABASE IF NOT EXISTS ${database}`);
-
-    this.connection.query(`USE ${database}`);
-
-    // only for development
-    // this.connection.query('DROP TABLE IF EXISTS posts');
-
-    // wait for the database to be created, 300ms should be enough
-    setTimeout(() => {
-      this._createTables(tables);
-    }, 300);
-
-    console.log('MySQL connected');
+    this.connect(
+      this.host,
+      this.port,
+      this.user,
+      this.password,
+      this.database,
+    );
   }
 
   async _createTables(
@@ -62,16 +50,26 @@ export default class M_Database {
       insertTable: string;
     }[],
   ) {
+    if(!this.isConnected()) {
+      // also log in prod
+      console.log('MySQL not connected');
+      return;
+    };
     for (const type of types) {
       // first check if the type exists
       if (!fs.existsSync(path.join(__dirname, '..', 'types', type.filename)))
         throw Error(`File at @types/${type.filename} does not exist`);
-      await this.connection.query(type.createTable);
+      await this.connection?.query(type.createTable);
     }
   }
 
   close() {
-    this.connection.end();
+    if(!this.isConnected()) {
+      // also log in prod
+      console.log('MySQL not connected');
+      return;
+    };
+    this.connection?.end();
   }
 
   // exec automatically catches errors and returns the result,
@@ -82,6 +80,11 @@ export default class M_Database {
   async exec(
     fn: (connection: any) => any,
   ): Promise<undefined | ApiResponse<null> | any> {
+    if(!this.isConnected()) {
+      // also log in prod
+      console.log('MySQL not connected');
+      return;
+    };
     try {
       const result = await fn(this.connection);
       return ApiSuccess<any>(result);
@@ -89,5 +92,65 @@ export default class M_Database {
       dev_log(error);
       return ApiError(error.message);
     }
+  }
+
+  isConnected() {
+    return !(this.connection === undefined);
+  }
+
+  retryConnection(): boolean {
+    this.connect(
+      this.host,
+      this.port,
+      this.user,
+      this.password,
+      this.database,
+    )
+
+    return this.isConnected();
+  }
+
+  async connect(host: string,
+    port: number,
+    user: string,
+    password: string,
+    database: string,
+    ) {
+      try {
+        this.connection = mysql
+        .createPool({
+          host: host,
+          port: port,
+          user: user,
+          password: password,
+          database: database,
+          idleTimeout: 5000,
+        })
+        .promise();
+      } catch(error: unknown) {
+        dev_log(error);
+        return;
+      }
+    
+      // CREATE DATABASE IF NOT EXISTS redis_mysql
+
+      try{  
+        await this.connection.query(`CREATE DATABASE IF NOT EXISTS ${database}`);
+  
+        await this.connection.query(`USE ${database}`);
+      } catch(error: unknown) {
+        dev_log(error);
+        return;
+      }
+    
+      // only for development
+      // this.connection.query('DROP TABLE IF EXISTS posts');
+  
+      // wait for the database to be created, 300ms should be enough
+      setTimeout(() => {
+        this._createTables(tables);
+      }, 300);
+  
+      console.log('MySQL connected');
   }
 }

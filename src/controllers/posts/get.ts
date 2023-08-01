@@ -17,12 +17,17 @@ export default async function getPost(req: Request, res: Response) {
   });
 
   if (data.status === 'error') {
-    flash('message', 'Post not found', res);
+    flash('message', 'Error getting the post...', res);
     return res.redirect('/blog');
   }
 
   dev_log({ data });
 
   const post = data.data[0] as mysql.RowDataPacket;
+  if (!post) {
+    flash('message', 'Post not found', res);
+    return res.redirect('/blog');
+  }
+
   return res.render('post', { post, user: req.user, flash: getFlash('message', req, res) });
 }

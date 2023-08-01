@@ -18,6 +18,7 @@ import multer from 'multer';
 import path from 'path';
 import flash from 'connect-flash';
 import { flash as myFlash } from './flash';
+import { mDatabase } from '..';
 
 export const rateLimiterUsingThirdParty = rateLimit({
   windowMs: 2 * 60 * 1000, // 2 minutes in milliseconds
@@ -110,6 +111,17 @@ export default function initial_config(app: Express) {
   );
 
   app.use(flash());
+  
+  // makes sure the main_database is connected
+  // if not it retrys the connection
+  app.use((req, res, next) => {
+    if (mDatabase.isConnected()) return next();
+    if(mDatabase.retryConnection()) return next();
+    myFlash('message', 'Database not connected', res);
+    return res.redirect('/');
+  });
+
+
   app.use(function (req, res, next) {
     res.locals.messages = req.flash();
     next();

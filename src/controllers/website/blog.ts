@@ -3,7 +3,7 @@ import { mDatabase } from '../..';
 import { ApiResponse } from '../../common/api_response';
 import mysql from 'mysql2';
 import dev_log from '../../common/dev_log';
-import { getFlash } from '../../common/flash';
+import { flash, getFlash } from '../../common/flash';
 
 export async function blog(req: Request, res: Response) {
 
@@ -30,7 +30,8 @@ export async function blog(req: Request, res: Response) {
         });    
 
     if(data.status === 'error') {
-        return res.render('blog', { posts: [], error: data.message });
+        flash('message', 'Error getting the posts...', res);
+        return res.redirect('/');
     }
 
     const posts = data.data as mysql.RowDataPacket[];
