@@ -68,7 +68,7 @@ export default function initial_config(app: Express) {
       secret: process.env.SESSION_SECRET ?? 'secret',
       resave: false,
       saveUninitialized: true,
-      proxy: true,
+      proxy: false,
       cookie: {
         secure: process.env.NODE_ENV === 'development' ? false : true,
         httpOnly: process.env.NODE_ENV === 'development' ? false : true,
