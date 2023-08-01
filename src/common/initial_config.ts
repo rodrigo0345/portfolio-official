@@ -70,8 +70,8 @@ export default function initial_config(app: Express) {
       saveUninitialized: true,
       proxy: true,
       cookie: {
-        secure: process.env.NODE_ENV === 'development' ? false : true,
-        httpOnly: process.env.NODE_ENV === 'development' ? false : false,
+        secure: process.env.NODE_ENV === 'development' ? false : false,
+        httpOnly: process.env.NODE_ENV === 'development' ? false : true,
         sameSite: process.env.NODE_ENV === 'development' ? false : false,
       },
     }),
