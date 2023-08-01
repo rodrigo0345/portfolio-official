@@ -66,7 +66,7 @@ export default function initial_config(app: Express) {
   app.use(
     session({
       secret: process.env.SESSION_SECRET ?? 'secret',
-      resave: true,
+      resave: false,
       saveUninitialized: true,
       proxy: true,
       cookie: {
