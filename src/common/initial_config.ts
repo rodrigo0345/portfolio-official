@@ -33,7 +33,7 @@ export default function initial_config(app: Express) {
   dotenv.config();
 
   // use this when you are behind a proxy (e.g. nginx) (to me this made nginx not work... so I disable it as default)
-  if(process.env.NODE_ENV === 'production')
+  if(!(process.env.NODE_ENV === 'development'))
     app.set('trust proxy', 1);
 
   app.use('/public', express.static(path.join(__dirname, "../../public"))); // serve files from the public directory
@@ -67,7 +67,8 @@ export default function initial_config(app: Express) {
     session({
       secret: process.env.SESSION_SECRET ?? 'secret',
       resave: true,
-      saveUninitialized: false,
+      saveUninitialized: true,
+      proxy: true,
       cookie: {
         secure: process.env.NODE_ENV === 'development' ? false : true,
         httpOnly: process.env.NODE_ENV === 'development' ? false : true,
