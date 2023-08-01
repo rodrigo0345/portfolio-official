@@ -6,7 +6,6 @@ import { flash } from './flash';
 export default function protectRoute(req: any, res: any, next: any) {
   dev_log({ user: req.user, email: adminEmail });
 
-  console.log({email: req.user.email});
   if (req.isAuthenticated() && req.user.email === "rodrigocralha@gmail.com") {
     return next();
   }
