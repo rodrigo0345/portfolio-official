@@ -41,6 +41,14 @@ services:
     depends_on:
       - main_db
       - cache
+    restart: always
+    resources: 
+      limits:
+        cpus: '0.5'
+        memory: 512M
+      reservations:
+        cpus: '0.25'
+        memory: 256M
 
   main_db:
     container_name: main_db
@@ -56,14 +64,3 @@ services:
       - '3306:3306'
     networks:
       - backend-to-main_db
-
-  cache:
-    image: redis:7.0-alpine
-    restart: always
-    ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning
-    volumes:
-      - cache:/cache-portfolio
-    networks:
-      - backend-to-cache
