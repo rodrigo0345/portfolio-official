@@ -42,13 +42,14 @@ services:
       - main_db
       - cache
     restart: always
-    resources: 
-      limits:
-        cpus: '0.5'
-        memory: 512M
-      reservations:
-        cpus: '0.25'
-        memory: 256M
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
 
   main_db:
     container_name: main_db
