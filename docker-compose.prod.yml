@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 volumes:
   db:
     driver: local
@@ -31,7 +31,7 @@ services:
       - M_DATABASE_PASSWORD=${M_DATABASE_PASSWORD}
       - M_DATABASE_HOST=${M_DATABASE_HOST}
       - M_DATABASE_NAME=${M_DATABASE_NAME}
-      - REDIS_URL=${REDIS_URL:-} # Provide a default value here to avoid the warning
+      - REDIS_URL=${REDIS_URL}
     networks:
       - backend-to-cache
       - backend-to-main_db
@@ -61,7 +61,20 @@ services:
       MYSQL_DATABASE: ${M_DATABASE_NAME}
       MYSQL_ROOT_HOST: '%'
     command: --bind-address=0.0.0.0
+    volumes:
+      - db:/var/lib/mysql
     ports:
       - '3306:3306'
     networks:
       - backend-to-main_db
+
+  cache:
+    image: redis:7.0-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning
+    volumes:
+      - cache:/cache-portfolio
+    networks:
+      - backend-to-cache
