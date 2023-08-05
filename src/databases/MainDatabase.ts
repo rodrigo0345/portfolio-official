@@ -94,7 +94,7 @@ export default class M_Database {
     };
     try {
       const result = await fn(this.connection);
-      return result;
+      return ApiSuccess(result);
     } catch (error: any) {
       dev_log(error);
       return ApiError(error.message);
