@@ -147,7 +147,7 @@ export default class M_Database {
   
         await this.connection.query(`USE ${database}`);
       } catch(error: unknown) {
-        dev_log(error);
+        console.error(error);
         return;
       }
     
