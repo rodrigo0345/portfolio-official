@@ -63,7 +63,7 @@ services:
       MYSQL_ROOT_HOST: '%'
     command: --bind-address=0.0.0.0
     volumes:
-      - main_db_vol:~/main_db/portfolio
+      - main_db_vol:/var/portfolio/main_db
     ports:
       - '3306:3306'
     networks:
