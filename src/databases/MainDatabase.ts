@@ -34,6 +34,7 @@ export default class M_Database {
     this.user = db_user || 'root';
     this.password = db_password || 'password';
     this.database = db_name || 'main';
+    this.connection = undefined;
 
     // ONLY CALL THIS ONCE
     this.#checkConnection();
@@ -131,7 +132,6 @@ export default class M_Database {
           port: port,
           user: user,
           password: password,
-          database: database,
           idleTimeout: 5000,
         })
         .promise();
