@@ -34,7 +34,6 @@ export default class M_Database {
     this.user = db_user || 'root';
     this.password = db_password || 'password';
     this.database = db_name || 'main';
-    this.connection = undefined;
 
     // ONLY CALL THIS ONCE
     this.#checkConnection();
@@ -143,7 +142,6 @@ export default class M_Database {
       // CREATE DATABASE IF NOT EXISTS redis_mysql
 
       try{  
-        this.connection.query(`GRANT ALL PRIVILEGES ON ${database}.* TO ${user}@'%';`);
         await this.connection.query(`CREATE DATABASE IF NOT EXISTS ${database}`);
   
         await this.connection.query(`USE ${database}`);
@@ -165,11 +163,7 @@ export default class M_Database {
 
   async #checkConnection() {
     setInterval(() => {
-      if(!this.connection) {
-        console.log("No connection yet, so not testing...");
-        return;
-      };
-      console.log("testing connection");
+      if(!this.connection) return;
       this.#testConnection();
     }, this.timeToCheck);
   } 
@@ -187,7 +181,7 @@ export default class M_Database {
 
       // this log message also appears on production
       console.error(error);
-      console.error("Main database not working as expected");
+      dev_log("Main database working as expected");
       return;
     }
 

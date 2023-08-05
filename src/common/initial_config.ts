@@ -33,10 +33,9 @@ export default function initial_config(app: Express) {
   dotenv.config();
 
   // use this when you are behind a proxy (e.g. nginx) (to me this made nginx not work... so I disable it as default)
-  if(!(process.env.NODE_ENV === 'development'))
-    app.set('trust proxy', 1);
+  // app.set('trust proxy', 1);
 
-  app.use('/public', express.static(path.join(__dirname, "../../public"))); // serve files from the public directory
+  app.use('/public', express.static('public')); // serve files from the public directory
   app.use(cookieParser());
   app.use(rateLimiterUsingThirdParty); // rate limit users based on the IP address
   app.use(bp.urlencoded({ extended: true }));
@@ -67,8 +66,8 @@ export default function initial_config(app: Express) {
     session({
       secret: process.env.SESSION_SECRET ?? 'secret',
       resave: false,
-      saveUninitialized: false,
-      proxy: false,
+      saveUninitialized: true,
+      proxy: true,
       cookie: {
         secure: process.env.NODE_ENV === 'development' ? false : false,
         httpOnly: process.env.NODE_ENV === 'development' ? false : true,
@@ -78,7 +77,6 @@ export default function initial_config(app: Express) {
   );
   app.use(passport.initialize());
   app.use(passport.session());
-
   passport.use(
     new Strategy(async function (username, password, done) {
       let user: user | undefined = undefined;
