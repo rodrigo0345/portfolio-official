@@ -32,6 +32,7 @@ services:
       - M_DATABASE_HOST=${M_DATABASE_HOST}
       - M_DATABASE_NAME=${M_DATABASE_NAME}
       - REDIS_URL=${REDIS_URL}
+      - M_DATABASE_TIME_TO_CHECK=${M_DATABASE_TIME_TO_CHECK}
     networks:
       - backend-to-cache
       - backend-to-main_db
