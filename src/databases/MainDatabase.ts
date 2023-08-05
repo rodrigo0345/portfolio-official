@@ -17,6 +17,7 @@ export default class M_Database {
   user;
   password;
   database;
+  timeToCheck: number;
 
   constructor(
     db_port: string | undefined,
@@ -24,14 +25,20 @@ export default class M_Database {
     db_user: string | undefined,
     db_password: string | undefined,
     db_name: string | undefined,
+    db_offset_time: number | undefined,
+    db_time_to_check: string | undefined,
   ) {
+    this.timeToCheck = Number.parseInt(db_time_to_check ?? '10000') + (db_offset_time ?? 0);
     this.port = Number.parseInt(db_port ?? '3306');
     this.host = db_host || 'localhost'; // Use the service name 'db' here
     this.user = db_user || 'root';
     this.password = db_password || 'password';
     this.database = db_name || 'main';
 
-    dev_log({ host: this.host, post: this.port, user: this.user, password: this.password, database: this.database });
+    // ONLY CALL THIS ONCE
+    this.#checkConnection();
+
+    dev_log({ host: this.host, post: this.port, user: this.user, password: this.password, database: this.database, time_to_check: this.timeToCheck, offset_time: db_offset_time });
 
     this.connect(
       this.host,
@@ -52,13 +59,13 @@ export default class M_Database {
   ) {
     if(!this.isConnected()) {
       // also log in prod
-      console.log('MySQL not connected');
+      console.log('Main Database not connected');
       return;
     };
     for (const type of types) {
       // first check if the type exists
       if (!fs.existsSync(path.join(__dirname, '..', 'types', type.filename)))
-        throw Error(`File at @types/${type.filename} does not exist`);
+        throw Error(`File at <project_dir>/types/${type.filename} does not exist`);
       await this.connection?.query(type.createTable);
     }
   }
@@ -66,17 +73,17 @@ export default class M_Database {
   close() {
     if(!this.isConnected()) {
       // also log in prod
-      console.log('MySQL not connected');
+      console.error('Main database not connected');
       return;
     };
     this.connection?.end();
   }
 
-  // exec automatically catches errors and returns the result,
+  /* exec automatically catches errors and returns the result,
   // in case of an error, check the status of the result
   // .status === 'error'
   // in case of undefined result, that means the query was
-  // successful but there was no result
+   successful but there was no result */
   async exec(
     fn: (connection: any) => any,
   ): Promise<undefined | ApiResponse<null> | any> {
@@ -87,7 +94,7 @@ export default class M_Database {
     };
     try {
       const result = await fn(this.connection);
-      return ApiSuccess<any>(result);
+      return result;
     } catch (error: any) {
       dev_log(error);
       return ApiError(error.message);
@@ -116,6 +123,7 @@ export default class M_Database {
     password: string,
     database: string,
     ) {
+      if(this.connection) this.connection.end();
       try {
         this.connection = mysql
         .createPool({
@@ -128,7 +136,7 @@ export default class M_Database {
         })
         .promise();
       } catch(error: unknown) {
-        dev_log(error);
+        console.error(error);
         return;
       }
     
@@ -147,10 +155,36 @@ export default class M_Database {
       // this.connection.query('DROP TABLE IF EXISTS posts');
   
       // wait for the database to be created, 300ms should be enough
-      setTimeout(() => {
+      await setTimeout(() => {
         this._createTables(tables);
       }, 300);
   
-      console.log('MySQL connected');
+      console.log('Main database connected');
+  }
+
+  async #checkConnection() {
+    setInterval(() => {
+      this.#testConnection();
+    }, this.timeToCheck);
+  } 
+
+  async #testConnection() {
+
+    if(!this.isConnected()) {
+      return;
+    };
+
+    try {
+      await this.connection.query('SELECT 1 + 1 AS solution');
+    } catch(error: unknown) {
+      this.connection = undefined;
+
+      // this log message also appears on production
+      console.error(error);
+      dev_log("Main database working as expected");
+      return;
+    }
+
+    dev_log("Main database working as expected");
   }
 }

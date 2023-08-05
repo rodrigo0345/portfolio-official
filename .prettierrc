@@ -1,17 +1,10 @@
 {
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
   "singleQuote": true,
   "trailingComma": "all",
-  "useTabs": false,
-  "tabWidth": 2,
-  "overrides": [
-    {
-      "files": "*.yaml",
-      "options": {
-        "tadWidth": 2,
-        "printWidth": 40,
-        "singleQuote": true
-      }
-    }
-  ],
-  "editor.formatOnSave": true
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "endOfLine": "auto"
 }
