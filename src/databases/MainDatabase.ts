@@ -164,7 +164,10 @@ export default class M_Database {
 
   async #checkConnection() {
     setInterval(() => {
-      if(!this.connection) console.log("No connection yet, so not testing...");
+      if(!this.connection) {
+        console.log("No connection yet, so not testing...");
+        return;
+      };
       console.log("testing connection");
       this.#testConnection();
     }, this.timeToCheck);
