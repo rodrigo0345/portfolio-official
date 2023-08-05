@@ -181,7 +181,7 @@ export default class M_Database {
 
       // this log message also appears on production
       console.error(error);
-      dev_log("Main database working as expected");
+      console.error("Main database not working as expected");
       return;
     }
 
