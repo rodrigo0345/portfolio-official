@@ -34,7 +34,10 @@ export async function blog(req: Request, res: Response) {
         return res.redirect('/');
     }
 
-    const posts = data.data as mysql.RowDataPacket[];
+    let posts = data.data as mysql.RowDataPacket[];
+    if(!posts) {
+        posts = [];
+    }
 
     dev_log({ posts, user: req.user });
     
