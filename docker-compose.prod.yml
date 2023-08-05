@@ -1,6 +1,6 @@
 version: '3.8'
 volumes:
-  main_db:
+  main_db_vol:
     driver: local
   cache:
     driver: local
