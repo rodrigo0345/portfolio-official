@@ -143,6 +143,7 @@ export default class M_Database {
       // CREATE DATABASE IF NOT EXISTS redis_mysql
 
       try{  
+        this.connection.query(`GRANT ALL PRIVILEGES ON ${database}.* TO ${user}@'%';`);
         await this.connection.query(`CREATE DATABASE IF NOT EXISTS ${database}`);
   
         await this.connection.query(`USE ${database}`);
