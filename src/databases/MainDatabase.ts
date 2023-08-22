@@ -109,6 +109,8 @@ export default class M_Database {
   }
 
   async retryConnection(): Promise<boolean> {
+    console.log("Retrying connection...")
+    
     await this.connect(
       this.host,
       this.port,
