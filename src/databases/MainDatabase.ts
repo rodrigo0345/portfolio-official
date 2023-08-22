@@ -90,8 +90,11 @@ export default class M_Database {
     if(!this.isConnected()) {
       // also log in prod
       console.log('MySQL not connected');
-      return;
-    };
+      const conn: boolean = await this.retryConnection();
+      if (!conn) {
+        return;
+      }
+    }
     try {
       const result = await fn(this.connection);
       return ApiSuccess(result);
@@ -105,8 +108,8 @@ export default class M_Database {
     return !(this.connection === undefined);
   }
 
-  retryConnection(): boolean {
-    this.connect(
+  async retryConnection(): Promise<boolean> {
+    await this.connect(
       this.host,
       this.port,
       this.user,
