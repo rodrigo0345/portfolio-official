@@ -100,7 +100,6 @@ export default class M_Database {
       return ApiSuccess(result);
     } catch (error: any) {
       dev_log(error);
-      this.retryConnection();
       return ApiError(error.message);
     }
   }

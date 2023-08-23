@@ -112,9 +112,8 @@ export default function initial_config(app: Express) {
   
   // makes sure the main_database is connected
   // if not it retrys the connection
-  app.use((req, res, next) => {
-    if (mDatabase.isConnected()) return next();
-    if(mDatabase.retryConnection()) return next();
+  app.use(async (req, res, next) => {
+    if(await mDatabase.retryConnection()) return next();
     myFlash('message', 'Database not connected', res);
     return res.redirect('/');
   });
