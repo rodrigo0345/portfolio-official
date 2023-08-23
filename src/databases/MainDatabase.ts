@@ -100,6 +100,7 @@ export default class M_Database {
       return ApiSuccess(result);
     } catch (error: any) {
       dev_log(error);
+      this.retryConnection();
       return ApiError(error.message);
     }
   }
@@ -159,7 +160,7 @@ export default class M_Database {
       // this.connection.query('DROP TABLE IF EXISTS posts');
   
       // wait for the database to be created, 300ms should be enough
-      await setTimeout(() => {
+      await setTimeout(async () => {
         this._createTables(tables);
       }, 300);
   
