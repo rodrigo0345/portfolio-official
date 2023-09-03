@@ -16,11 +16,12 @@ export async function blog(req: Request, res: Response) {
     const data = searchParams?
         await mDatabase.exec(async (connection) => {
             const offset = index * pageSize;
-            const rows = await connection?.all(`
-            SELECT * FROM posts 
-            WHERE title LIKE CONCAT('%', ?, '%')
-            ORDER BY id DESC LIMIT ?, ?`, 
-            [searchParams, offset, pageSize]);
+            const rows = await mDatabase.execute("\
+                SELECT * FROM posts\
+                WHERE title LIKE CONCAT('%', ?, '%')\
+                ORDER BY id DESC LIMIT ?, ?;",
+                [searchParams, offset, pageSize]
+            )
             console.log({rows});
             return [rows];
         })

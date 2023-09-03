@@ -1,15 +1,4 @@
 version: '3.8'
-volumes:
-  main_db_vol:
-    driver: local
-  cache:
-    driver: local
-
-networks:
-  backend-to-cache:
-    driver: bridge
-  backend-to-main_db:
-    driver: bridge
 
 services:
   backend:
@@ -33,16 +22,4 @@ services:
       - M_DATABASE_NAME=${M_DATABASE_NAME}
       - REDIS_URL=${REDIS_URL}
       - M_DATABASE_TIME_TO_CHECK=${M_DATABASE_TIME_TO_CHECK}
-    networks:
-      - backend-to-cache
-      - backend-to-main_db
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-        reservations:
-          cpus: '0.25'
-          memory: 256M
-
