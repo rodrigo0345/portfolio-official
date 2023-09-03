@@ -18,12 +18,12 @@ export async function blog(req: Request, res: Response) {
             const offset = index * pageSize;
             const rows = await mDatabase.execute("\
                 SELECT * FROM posts\
-                WHERE title LIKE CONCAT('%', ?, '%')\
+                WHERE title LIKE '%' || ? || '%'\
                 ORDER BY id DESC LIMIT ?, ?;",
                 [searchParams, offset, pageSize]
             )
             console.log({rows});
-            return [rows];
+            return rows; 
         })
         : 
         await mDatabase.exec(async (connection) => {
@@ -32,7 +32,7 @@ export async function blog(req: Request, res: Response) {
         });    
 
     if(data.status === 'error') {
-        flash('message', 'Error getting the posts...', res);
+        flash('message', data.message, res);
         return res.redirect('/');
     }
 
