@@ -36,12 +36,6 @@ services:
     networks:
       - backend-to-cache
       - backend-to-main_db
-    links:
-      - main_db
-      - cache
-    depends_on:
-      - main_db
-      - cache
     restart: always
     deploy:
       resources:
@@ -52,30 +46,3 @@ services:
           cpus: '0.25'
           memory: 256M
 
-  main_db:
-    container_name: main_db
-    restart: always
-    image: percona:8.0-centos
-    environment:
-      MYSQL_PASSWORD: ${M_DATABASE_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${M_DATABASE_PASSWORD}
-      MYSQL_DATABASE: ${M_DATABASE_NAME}
-      MYSQL_ROOT_HOST: '%'
-    command: --bind-address=0.0.0.0
-    volumes:
-      - main_db_vol:/var/portfolio/main_db
-    ports:
-      - '3306:3306'
-    networks:
-      - backend-to-main_db
-
-  cache:
-    image: redis:7.0-alpine
-    restart: always
-    ports:
-      - '6379:6379'
-    command: redis-server --save 20 1 --loglevel warning
-    volumes:
-      - cache:/cache-portfolio
-    networks:
-      - backend-to-cache

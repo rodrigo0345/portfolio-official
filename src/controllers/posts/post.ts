@@ -62,10 +62,11 @@ export default async function postPost(req: Request, res: Response) {
   }
 
   const result = await mDatabase.exec(async (connection) => {
-    return await connection.query(
-      tables.find((entity) => entity.name === 'posts')?.insertTable,
-      [title, content, finalFilename, category],
+    let rows: any = await mDatabase.execute(
+      tables.find((entity) => entity.name === 'posts')?.insertTable ?? "",
+        [title, content, finalFilename, category]
     );
+    return rows;
   });
 
   if (result.status === 'error') {

@@ -10,37 +10,35 @@ const tables = [
     // Dont forget to add "IF NOT EXISTS"
     createTable: `
             CREATE TABLE IF NOT EXISTS posts (
-                id INT NOT NULL AUTO_INCREMENT,
+                id INTEGER,
                 title VARCHAR(255) NOT NULL,
                 content TEXT NOT NULL,
                 category VARCHAR(255) NOT NULL,
                 image VARCHAR(255) NOT NULL,
                 created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (id)
             );`,
     insertTable: `
-            INSERT INTO posts (title, content, image, category)
-            VALUES (?, ?, ?, ?);`,
+            INSERT INTO posts (id, title, content, image, category)
+            VALUES (NULL, ?, ?, ?, ?);`,
   },
-  {
-    filename: 'user.ts',
+  { filename: 'user.ts',
     name: 'users',
     createTable: `
             CREATE TABLE IF NOT EXISTS users (
-                id INT NOT NULL AUTO_INCREMENT UNIQUE,
+                id INTEGER,
                 name VARCHAR(255) NOT NULL,
                 email VARCHAR(255) NOT NULL UNIQUE,
                 password VARCHAR(255) NOT NULL,
                 deleted BOOLEAN NOT NULL DEFAULT FALSE,
                 created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                updated_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 PRIMARY KEY (id)
             );`,
     insertTable: `
-            INSERT INTO users (name, email, password)
-            VALUES (?, ?, ?);`,
-  },
+            INSERT INTO users (id, name, email, password)
+            VALUES (NULL, ?, ?, ?);`, },
 ];
 
 export default tables;

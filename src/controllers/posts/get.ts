@@ -12,7 +12,7 @@ export default async function getPost(req: Request, res: Response) {
   }
 
   const data = await mDatabase.exec(async (connection) => {
-    const [rows] = await connection.query('SELECT * FROM posts WHERE id = ?', [id]);
+    let rows: any = await mDatabase.execute("SELECT * FROM posts WHERE id = ?", [id]); 
     return rows;
   });
 

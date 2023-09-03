@@ -18,7 +18,7 @@ export default async function editPost(req: Request, res: Response) {
     }
 
     const result = await mDatabase.exec(async (connection) => {
-        connection.execute(`UPDATE posts SET content = ? WHERE id = ?`, [content, id]);
+        await mDatabase.execute("UPDATE posts SET content = ? WHERE id = ?", [content, id]);
     });
 
     if(result.status === 'error') {

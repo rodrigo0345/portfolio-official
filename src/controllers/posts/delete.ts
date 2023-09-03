@@ -13,7 +13,7 @@ export async function deletePost(req: Request, res: Response) {
     }
 
     const result = await mDatabase.exec(async (connection) => {
-        return await connection.execute(`DELETE FROM posts WHERE id = ?`, [id]);
+        return await mDatabase.execute("DELETE FROM posts WHERE id = ?", [id]);
     });
 
     if (result.status === 'error') {

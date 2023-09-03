@@ -1,17 +1,16 @@
-import mysql, { Pool, ResultSetHeader, RowDataPacket } from 'mysql2';
 import dev_log from '../common/dev_log';
 import { ApiError, ApiResponse, ApiSuccess } from '../common/api_response';
 import fs from 'fs';
 import tables from '../types/db';
 import path from 'path';
-
+import sqlite3 from 'sqlite3';
 /*
     What is this file?
     This file contains a database class that is used to connect to a MySQL database or any other database.
     The class is used to execute queries and return the result without worrying about the connection and catching errors.
 */
 export default class M_Database {
-  connection: any | undefined;
+  connection: sqlite3.Database | undefined;
   port;
   host;
   user;
@@ -66,7 +65,7 @@ export default class M_Database {
       // first check if the type exists
       if (!fs.existsSync(path.join(__dirname, '..', 'types', type.filename)))
         throw Error(`File at <project_dir>/types/${type.filename} does not exist`);
-      await this.connection?.query(type.createTable);
+      await this.connection?.run(type.createTable);
     }
   }
 
@@ -76,7 +75,7 @@ export default class M_Database {
       console.error('Main database not connected');
       return;
     };
-    this.connection?.end();
+    this.connection?.close();
   }
 
   /* exec automatically catches errors and returns the result,
@@ -85,11 +84,11 @@ export default class M_Database {
   // in case of undefined result, that means the query was
    successful but there was no result */
   async exec(
-    fn: (connection: any) => any,
+    fn: (connection: sqlite3.Database | undefined) => any,
   ): Promise<undefined | ApiResponse<null> | any> {
     if(!this.isConnected()) {
       // also log in prod
-      console.log('MySQL not connected');
+      console.log('SQLite not connected');
       const conn: boolean = await this.retryConnection();
       if (!conn) {
         return;
@@ -128,28 +127,15 @@ export default class M_Database {
     password: string,
     database: string,
     ) {
-      if(this.connection) this.connection.end();
+      if(this.connection) this.connection.close();
       try {
-        this.connection = mysql
-        .createPool({
-          host: host,
-          port: port,
-          user: user,
-          password: password,
-          idleTimeout: 5000,
-        })
-        .promise();
-      } catch(error: unknown) {
-        console.error(error);
-        return;
-      }
-    
-      // CREATE DATABASE IF NOT EXISTS redis_mysql
-
-      try{  
-        await this.connection.query(`CREATE DATABASE IF NOT EXISTS ${database}`);
-  
-        await this.connection.query(`USE ${database}`);
+        this.connection = new sqlite3.Database("main.db", (err) => {
+                if(err) {
+                    console.error(err.message);
+                } else {
+                    console.log("SQLite connected");
+                }
+            });
       } catch(error: unknown) {
         console.error(error);
         return;
@@ -180,7 +166,7 @@ export default class M_Database {
     };
 
     try {
-      await this.connection.query('SELECT 1 + 1 AS solution');
+      await this.connection?.run('SELECT 1 + 1 AS solution');
     } catch(error: unknown) {
       this.connection = undefined;
 
@@ -192,4 +178,13 @@ export default class M_Database {
 
     dev_log("Main database working as expected");
   }
+
+    async execute(sql: string, params: any[]): Promise<any> {
+        return new Promise((resolve,reject) => {
+            this.connection?.all(sql, params, function(err: any,rows: any){
+               if(err){return reject(err);}
+               resolve(rows);
+         });
+    });
+    }
 }

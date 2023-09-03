@@ -16,16 +16,17 @@ export async function blog(req: Request, res: Response) {
     const data = searchParams?
         await mDatabase.exec(async (connection) => {
             const offset = index * pageSize;
-            const [rows] = await connection.query(`
+            const rows = await connection?.all(`
             SELECT * FROM posts 
             WHERE title LIKE CONCAT('%', ?, '%')
             ORDER BY id DESC LIMIT ?, ?`, 
             [searchParams, offset, pageSize]);
-            return rows;
+            console.log({rows});
+            return [rows];
         })
         : 
         await mDatabase.exec(async (connection) => {
-            const [rows] = await connection.query('SELECT * FROM posts ORDER BY id DESC LIMIT ?, ?', [index, pageSize]);
+            let rows: any = await mDatabase.execute("SELECT * FROM posts ORDER BY id DESC LIMIT ?, ?", [index * pageSize, pageSize]); 
             return rows;
         });    
 

@@ -41,12 +41,9 @@ export default async function postRegister(req: Request, res: Response) {
     (table) => table.name === 'users',
   )?.insertTable;
 
-  const result = await mDatabase.exec(async (connection) => {
-    return await connection.query(sqlCommand, [
-      name,
-      email,
-      hashedPassword,
-    ]);
+  const result = await mDatabase.exec(async () => {
+    let rows: any = await mDatabase.execute(sqlCommand ?? "", [name, email, hashedPassword]); 
+    return rows;
   });
 
   if (result.status === 'error') {
