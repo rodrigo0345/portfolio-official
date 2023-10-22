@@ -39,3 +39,4 @@ lerna-debug.log*
 !.yarn/releases
 
 .env
+main.db
