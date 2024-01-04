@@ -1,5 +1,5 @@
 # Use the official Node.js 16 LTS image as the base image
-FROM node:lts AS node
+FROM node:20 AS node
 
 # Set the working directory inside the container
 WORKDIR /workspace
@@ -9,6 +9,7 @@ COPY package.json package-lock.json ./
 
 # Update npm to the latest version
 RUN npm install -g npm@9.8.1
+RUN npm install -g nodemon
 
 # Install app dependencies (ignore the deprecated package warning)
 RUN npm ci
@@ -20,4 +21,4 @@ COPY ./src ./src
 EXPOSE 8000
 
 # Start the Node.js app
-CMD ["npm", "start"]
+CMD ["nodemon", "./src/index.ts"]
