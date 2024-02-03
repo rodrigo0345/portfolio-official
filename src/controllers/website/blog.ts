@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { mDatabase } from '../..';
-import { ApiResponse } from '../../common/api_response';
+import { ApiError, ApiResponse } from '../../common/api_response';
 import mysql from 'mysql2';
 import dev_log from '../../common/dev_log';
 import { flash, getFlash } from '../../common/flash';
@@ -11,25 +11,26 @@ export async function blog(req: Request, res: Response) {
     searchParams = searchParams.toLocaleLowerCase();
 
     const index = req.query.index ? parseInt(req.query.index as string) : 0;
-    const pageSize = 16;
+    const pageSize = 10;
 
-    const data = searchParams?
-        await mDatabase.exec(async (connection) => {
+
+    let data: ApiResponse<any> = ApiError("No data");
+    if(searchParams) {
+        data = await mDatabase.exec(async (connection) => {
             const offset = index * pageSize;
-            const rows = await mDatabase.execute("\
-                SELECT * FROM posts\
-                WHERE title LIKE '%' || ? || '%'\
-                ORDER BY id DESC LIMIT ?, ?;",
-                [searchParams, offset, pageSize]
-            )
-            console.log({rows});
+            const rows = await mDatabase.execute(
+                "SELECT * FROM posts WHERE title LIKE '%' || $1 || '%' ORDER BY id DESC LIMIT $2 OFFSET $3;",
+                [searchParams, pageSize, offset]
+            );
             return rows; 
         })
-        : 
-        await mDatabase.exec(async (connection) => {
-            let rows: any = await mDatabase.execute("SELECT * FROM posts ORDER BY id DESC LIMIT ?, ?", [index * pageSize, pageSize]); 
-            return rows;
-        });    
+    } else {
+        const offset = index * pageSize;
+        data = await mDatabase.execute(
+            "SELECT * FROM posts WHERE title LIKE '%' || $1 || '%' ORDER BY id DESC OFFSET $2 FETCH FIRST $3 ROWS ONLY;",
+            [searchParams, offset, pageSize]
+        );
+    }
 
     if(data.status === 'error') {
         flash('message', data.message, res);
